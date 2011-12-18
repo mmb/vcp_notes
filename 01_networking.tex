@@ -1,0 +1,48 @@
+\documentclass{article}
+
+\begin{document}
+
+\section{Networking}
+
+802.1Q is the VLAN standard.\\
+
+TCP Segmentation offload (TSO) allows a TCP/IP stack to emit large frames
+up to 64K which are broken down into MTU-sized frames by the network adapter.
+
+\subsection{vSphere Standard Switches}
+
+The default number of logical ports for a standard switch is 120.\\
+
+All portgroups in the same broadcast domain are given the same network label.
+If two portgroups are not in the same broadcast domain they will have different
+network labels.\\
+
+VLAN 4095 can see traffic from any VLAN.
+
+\subsection{VMkernel Ports}
+
+Can be used for:
+
+\begin{itemize}
+\item Fault Tolerance logging
+\item IP storage (iSCSI, NFS)
+\item management
+\item vMotion
+\end{itemize}
+
+Each VMkernel port has an IP address configured for it or can use DHCP.\\
+
+You can enable vMotion and IP storage for only one port group per host.
+
+\subsection{vSphere Distributed Switches}
+
+\subsection{Private VLANs}
+
+To use PVLANS, the physical switch connected to the host needs to support them.
+
+\subsection{Jumbo Frames}
+
+Jumbo frames up to 9K are supported. The physical adapter must support jumbo
+frames.
+
+\end{document}
