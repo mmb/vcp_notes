@@ -45,4 +45,109 @@ To use PVLANS, the physical switch connected to the host needs to support them.
 Jumbo frames up to 9K are supported. The physical adapter must support jumbo
 frames.
 
+\subsection{Failover and Load Balancing Policy}
+
+To avoid losing connectivity during failover or failback, put your physical
+switch in portfast or portfast trunk mode.
+
+\subsubsection{Load Balancing Options}
+
+Based on:
+
+\begin{itemize}
+\item port id of virtual port traffic entered switch on
+\item hash of source and destination IP addresses
+\item hash of source MAC
+\item physical NIC load
+\item explicit order, use highest order uplink from list
+\end{itemize}
+
+IP-based teaming requires that the physical switch be configured with
+etherchannel. When using other options etherchannel should be disabled.
+
+\subsubsection{Failover Detection}
+
+\begin{itemize}
+
+\item link status only, detects cable pulls and power failures, but not
+configuration errors such as being blocked by spanning tree or set to wrong VLAN
+
+\item beacon probing, do not use with IP-hash load balancing
+
+\end{itemize}
+
+When using iSCSI multipathing, the VMkernel interface must have one active
+adapter and no standby adapters.\\
+
+When using IP-hash load balancing do not configure standby links.
+
+\subsection{Traffic Shaping}
+
+ESXi shapes outbound network traffic on standard switches and input and
+outbound traffic on distributed switches.
+
+\subsection{Monitoring}
+
+NetFlow settings are configured at the vSphere distributed switch level.
+
+\subsection{VLAN Configuration}
+
+VLANs can be configured using the following methods:
+
+\begin{itemize}
+
+\item External Switch Tagging (EST), physical switch does all VLAN tagging,
+virtual switch port groups have VLAN set to 0
+
+\item Virtual Switch Tagging (VST). VLAN tagging performed by virtual switch
+before leaving the host, host adapters are connected to trunk ports on
+physical switch, port groups have VLAN set
+
+\item Virtual Guest Tagging (VGT), VLAN tagging performed by virtual machine,
+physical switch ports are set to trunk, requires driver on virtual machine
+
+\end{itemize}
+
+\subsection{Port Mirroring}
+
+If you don't select ``Allow normal IO on destination ports'' mirrored traffic
+is allowed out but not in on destination ports.
+
+\subsection{MAC Addresses}
+
+When manually assigning MACs the fourth octet must be between 00 and 3F to
+avoid conflicts with VMware Workstation and Server MAC addresses.\\
+
+Generated MACs are constructed using the VMware OUI, the SMBIOS UUID of the
+host and hash of the entity name.
+
+\subsection{Best Practices}
+
+\begin{itemize}
+
+\item separate network services for security and performance
+
+\item put vMotion on its own network using VLANs or a separate physical network
+(preferred)
+
+\item when using passthrough devices on Linux 2.6.20 or earlier avoid MSI
+and MSI-X due to performance problems
+
+\item create a standard or distributed switch for each network service, or
+at least put them in port groups in different VLANs
+
+\item as long as there is one uplink available, virtual machines and network
+services will be able to connect to the physical network
+
+\item deploy firewalls on virtual machines that route between networks with
+uplinks to physical networks and networks with no uplinks
+
+\item use vmxnet3 virtual NICs
+
+\item every physical NIC connected to the same vSphere standard or distributed
+switch should be on the same physical network
+
+\item set all VMkernel network adapters to the same MTU
+
+\end{itemize}
 \end{document}
