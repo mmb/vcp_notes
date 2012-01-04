@@ -1,0 +1,32 @@
+\subsection{Configure vNetwork Standard Switches}
+
+\subsubsection{Identify vNetwork Standard Switch (vSS) capabilities}
+
+The default number of logical ports for a standard switch is 120.
+
+\subsubsection{Create/Delete a vNetwork Standard Switch}
+
+\subsubsection{Add/Configure/Remove vmnics on a vNetwork Standard Switch}
+
+\subsubsection{Configure vmkernel ports for network services}
+
+vmkernel ports can be used for:
+
+\begin{itemize}
+\item Fault Tolerance logging
+\item IP storage (iSCSI, NFS)
+\item management
+\item vMotion
+\end{itemize}
+
+Each VMkernel port has an IP address configured for it or can use DHCP.\\
+
+You can enable vMotion and IP storage for only one port group per host.
+
+\subsubsection{Add/Edit/Remove port groups on a vNetwork Standard Switch}
+
+All portgroups in the same broadcast domain are given the same network label.
+If two portgroups are not in the same broadcast domain they will have different
+network labels.
+
+\subsubsection{Determine use cases for a vNetwork Standard Switch}

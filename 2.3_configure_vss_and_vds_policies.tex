@@ -1,0 +1,81 @@
+\subsection{Configure vSS and vDS policies}
+
+\subsubsection{Identify common vSS and vDS policies}
+
+\subsubsection{Configure dvPort group blocking policies}
+
+\subsubsection{Configure load balancing and failover policies}
+
+To avoid losing connectivity during failover or failback, put your physical
+switch in portfast or portfast trunk mode.\\
+
+Load balancing can be based on:
+
+\begin{itemize}
+\item port id of virtual port the traffic entered switch on
+\item hash of source and destination IP addresses
+\item hash of source MAC
+\item physical NIC load
+\item explicit order, use highest order uplink from list
+\end{itemize}
+
+IP-based teaming requires that the physical switch be configured with
+etherchannel. When using other options etherchannel should be disabled.\\
+
+When using iSCSI multipathing, the VMkernel interface must have one active
+adapter and no standby adapters.\\
+
+When using IP-hash load balancing do not configure standby links.\\
+
+Failover detection can be done in two ways:
+
+\begin{itemize}
+
+\item link status only, detects cable pulls and power failures, but not
+configuration errors such as being blocked by spanning tree or set to wrong
+VLAN
+
+\item beacon probing, do not use with IP-hash load balancing
+
+\end{itemize}
+
+\subsubsection{Configure VLAN settings}
+
+802.1Q is the VLAN standard.\\
+
+VLAN 4095 can see traffic from any VLAN.\\
+
+VLANs can be configured using the following methods:
+
+\begin{itemize}
+
+\item External Switch Tagging (EST), physical switch does all VLAN tagging,
+virtual switch port groups have VLAN set to 0
+
+\item Virtual Switch Tagging (VST). VLAN tagging performed by virtual switch
+before leaving the host, host adapters are connected to trunk ports on
+physical switch, port groups have VLAN set
+
+\item Virtual Guest Tagging (VGT), VLAN tagging performed by virtual machine,
+physical switch ports are set to trunk, requires driver on virtual machine
+
+\end{itemize}
+
+To use PVLANS, the physical switch connected to the host needs to support them.
+
+\subsubsection{Configure traffic shaping policies}
+
+ESXi shapes outbound network traffic on standard switches and input and
+outbound traffic on distributed switches.
+
+\subsubsection{Enable TCP Segmentation Offload support for a virtual machine}
+
+TCP Segmentation offload (TSO) allows a TCP/IP stack to emit large frames
+up to 64K which are broken down into MTU-sized frames by the network adapter.
+
+\subsubsection{Enable Jumbo Frames support on appropriate components}
+
+Jumbo frames up to 9K are supported. The physical adapter must support jumbo
+frames.
+
+\subsubsection{Determine appropriate VLAN configuration for a vSphere implementation}

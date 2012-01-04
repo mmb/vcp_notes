@@ -1,0 +1,29 @@
+\subsection{Networking Best Practices}
+
+\begin{itemize}
+
+\item separate network services for security and performance
+
+\item put vMotion on its own network using VLANs or a separate physical network
+(preferred)
+
+\item when using passthrough devices on Linux 2.6.20 or earlier avoid MSI
+and MSI-X due to performance problems
+
+\item create a standard or distributed switch for each network service, or
+at least put them in port groups in different VLANs
+
+\item as long as there is one uplink available, virtual machines and network
+services will be able to connect to the physical network
+
+\item deploy firewalls on virtual machines that route between networks with
+uplinks to physical networks and networks with no uplinks
+
+\item use vmxnet3 virtual NICs
+
+\item every physical NIC connected to the same vSphere standard or distributed
+switch should be on the same physical network
+
+\item set all VMkernel network adapters to the same MTU
+
+\end{itemize}

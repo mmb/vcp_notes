@@ -1,0 +1,72 @@
+\subsection{Configure Shared Storage for vSphere}
+
+\subsubsection{Identify storage adapters and devices}
+
+Storage adapter types:
+
+\begin{itemize}
+\item SCSI
+\item iSCSI
+\item RAID
+\item Fiber Channel
+\item Fiber Channel over Ethernet (FCoE)
+\item Ethernet
+\end{itemize}
+
+\begin{description}
+
+  \item[HBA] host bus adapter, storage interface card
+
+  \item [LUN] logical unit number, a device addressed by SCSI, iSCSI or Fiber
+    Channel, logical disk
+
+  \item[WWN] world-wide name, uniquely identifies a Fiber Channel adapter
+
+  \item[target] a single storage unit that the host can access
+
+\end{description}
+
+\subsubsection{Identify storage naming conventions}
+
+Some storage vendors present a single target with multiple LUNs, some present
+multiple targets with one LUN each.\\
+
+If a LUN is shared by multiple hosts, it must be presented to all hosts with
+the same UUID.\\
+
+Runtime name is not a reliable identifier for a device and is not persistent.
+
+\subsubsection{Identify hardware/dependent hardware/software iSCSI initiator requirements}
+
+Dependent hardware iSCSI] depends on VMware networking and interfaces provided
+by VMware.
+
+\subsubsection{Compare and contrast array thin provisioning and virtual disk thin provisioning}
+
+\subsubsection{Describe zoning and LUN masking practices}
+
+\subsubsection{Scan/Rescan storage}
+
+\subsubsection{Identify use cases for FCoE}
+
+\subsubsection{Create an NFS share for use with vSphere}
+
+The NFS client built into ESXi uses NFS version 3.
+
+\subsubsection{Connect to a NAS device}
+
+\subsubsection{Enable/Configure/Disable vCenter Server storage filters}
+
+\subsubsection{Configure/Edit hardware/dependent hardware initiators}
+
+\subsubsection{Enable/Disable software iSCSI initiator}
+
+\subsubsection{Configure/Edit software iSCSI initiator settings}
+
+\subsubsection{Configure iSCSI port binding}
+
+\subsubsection{Enable/Configure/Disable iSCSI CHAP}
+
+\subsubsection{Determine use case for hardware/dependent hardware/software iSCSI initiator}
+
+\subsubsection{Determine use case for and configure array thin provisioning}
