@@ -1,0 +1,50 @@
+\subsection{Install and Configure VMware ESXi}
+
+In vSphere 5, ESX has been completely replaced with ESXi.\\
+
+ESXi is a thin install and doesn't have all drivers. Image builder can build
+images with the required drivers.\\
+
+ESXi maximums:
+
+\begin{itemize}
+
+\item 160 logical CPUs per physical machine
+\item 2TB of physical RAM
+\item 512 VMs per host
+\item 2048 vCpus per host
+
+\end{itemize}
+
+host UEFI BIOS\\
+
+In vSphere 5, Mac OSX 10.6 Snow Leopard can be virtualized (but only on Apple
+hardware).\\
+
+SNMP support was also improved in vSphere 5.
+
+\subsubsection{Perform an interactive installation of ESXi}
+
+\subsubsection{Deploy an ESXi host using Auto Deploy}
+
+Auto Deploy can PXE boot stateless physical servers from a common image.\\
+
+Auto Deploy and Image Builder:
+
+\begin{itemize}
+\item centrally manage stateless hardware
+\item host configuration provided by answer file and/or host profiles
+\item can deploy image based on subnet (put different types of hosts on
+different subnets)
+\item image builder streamlines creation of customized installation media
+\end{itemize}
+
+\subsubsection{Configure NTP on an ESXi Host}
+
+\subsubsection{Configure DNS and Routing on an ESXi Host}
+
+\subsubsection{Enable/Configure/Disable hyperthreading}
+
+\subsubsection{Enable/Size/Disable memory compression cache}
+
+\subsubsection{License an ESXi host}

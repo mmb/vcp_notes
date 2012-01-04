@@ -1,0 +1,44 @@
+\subsection{Create and Configure VMFS and NFS Datastores}
+
+\subsubsection{Identify VMFS and NFS Datastore properties}
+
+\subsubsection{Identify VMFS5 capabilities}
+
+\begin{itemize}
+
+\item no more 2TB limit on VMFS volumes, the new limit is 64TB
+\item supports 2TB RDMs
+\item block size always 1 MB (no choice)
+\item atomic test and set (part of VAAI), locking mechanism
+\item sub-blocks for space efficiency (8K)
+\item small file support (1K)
+\item space reclamation on thin provisioned LUNs (with enhanced VAAI)
+\item monitoring of space when using thin provisioning (with enhanced VAAI)
+
+\end{itemize}
+
+\begin{description}
+
+\item[VASA] vSphere APIs for Storage Awareness
+
+\item[VAAI] vSphere APIs for Array Integration, support NFS now
+
+\end{description}
+
+\subsubsection{Create/Rename/Delete/Unmount a VMFS Datastore}
+
+\subsubsection{Mount/Unmount an NFS datastore}
+
+\subsubsection{Extend/Expand VMFS datastores}
+
+\subsubsection{Upgrade a VMFS3 Datastore to VMFS5}
+
+\subsubsection{Place a VMFS Datastore in Maintenance Mode}
+
+\subsubsection{Select the Preferred Path for a VMFS Datastore}
+
+\subsubsection{Disable a path to a VMFS Datastore}
+
+\subsubsection{Determine use case for multiple VMFS/NFS Datastores}
+
+\subsubsection{Determine appropriate Path Selection Policy for a given NFS Datastore}
