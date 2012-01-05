@@ -1,5 +1,7 @@
 \subsection{Secure vCenter Server and ESXi}
 
+Enabling remote tech support on the ESXi server enables ssh.
+
 \subsubsection{Identify common vCenter Server privileges and roles}
 
 \subsubsection{Describe how permissions are applied and inherited in vCenter Server}
@@ -11,6 +13,13 @@ Select the host, Configuration tab, Security Profile.
 \subsubsection{Enable/Configure/Disable services in the ESXi firewall}
 
 \subsubsection{Enable Lockdown Mode}
+
+Lockdown mode prevents users other than vpxuser from authenticating to a host.
+This means that no configuration can be done directly against the ESXi host
+using vSphere client or vSphere CLI and everything must be done through
+vCenter.\\
+
+root can still log in on the direct console when lockdown mode is enabled.
 
 \subsubsection{Configure network security policies}
 

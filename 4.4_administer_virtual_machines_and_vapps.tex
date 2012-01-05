@@ -10,9 +10,28 @@
 
 \subsubsection{Configure virtual machine options}
 
+virtual sockets versus cores
+
 \subsubsection{Configure virtual machine power settings}
 
 \subsubsection{Configure virtual machine boot options}
+
+BIOS is called ``firmware'' by VMware. When booting a VM press F2 to enter
+the BIOS. It is usually hard to press it fast enough so VM / Edit Settings /
+Options / Boot Options / Force BIOS Setup is used to make it boot into the
+BIOS at the next boot.\\
+
+To boot a VM from the CD drive press ESC for the boot menu during boot.\\
+
+vSphere 5 supports EFI firmware on VMs. EFI is a BIOS alternative that offers
+built in hardware drivers and a shell. It doesn't work with Windows guests
+or with network boot and is usually used for Mac OSX guests.\\
+
+To enable EFI BIOS on a VM go to VM / Edit Settings / Options / Boot Options.\\
+
+ESXi server can be booted on a system using EFI firmware (such as Apple
+hardware), allowing existing EXSi servers to be booted from hard drives, CD
+drives and USB devices.
 
 \subsubsection{Configure virtual machine troubleshooting options}
 

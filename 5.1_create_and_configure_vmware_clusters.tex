@@ -1,10 +1,18 @@
 \subsection{Create and Configure VMware Clusters}
 
+EVC (enhanced vMotion compatibility) allows hosts in a cluster with different
+CPU families to use the common denominator of CPU features. When enabled on a
+cluster, only compatible hosts may be added to the cluster. Even with EVC,
+you cannot mix AMD and Intel in the same cluster.
+
 \subsubsection{Describe DRS virtual machine entitlement}
 
 \subsubsection{Create/Delete a DRS/HA Cluster}
 
 \subsubsection{Add/Remove ESXi Hosts from a DRS/HA Cluster}
+
+When adding an ESXi host to e DRS/HA cluster you specify the hostname or
+IP address, username and password.
 
 \subsubsection{Add/Remove virtual machines from a DRS/HA Cluster}
 

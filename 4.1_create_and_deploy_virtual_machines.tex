@@ -1,5 +1,27 @@
 \subsection{Create and Deploy Virtual Machines}
 
+There are three ways to create a virtual machine:
+
+\begin{itemize}
+\item fresh OS install
+\item download and deploy a virtual appliance (www.vmware.com/appliances)
+\item P2V conversion
+\end{itemize}
+
+Virtual appliances can be downloaded using a web browser or directly from the
+vSphere Client by going to File / Browse VA Marketplace.\\
+
+When creating a lot of VMs, keep in mind:
+
+\begin{itemize}
+\item cost of license
+\item management overhead
+\item documentation
+\item training
+\item backups
+\item 3rd party software licenses based on the number of servers
+\end{itemize}
+
 \subsubsection{Identify capabilities of virtual machine hardware versions}
 
 vSphere 5 uses VM hardware version 8, which supports:
@@ -16,7 +38,35 @@ vSphere 5 uses VM hardware version 8, which supports:
 
 \subsubsection{Identify VMware tools device drivers}
 
+VMware tools contains the following drivers:
+
+\begin{itemize}
+\item SVGA
+\item VMXNet network driver for some guest OSs
+\item BusLogic SCSI for some guests
+\item memory control driver for efficient memory allocation between VMs
+\item sync driver to quiesce IO for backup
+\item VMware mouse driver
+\end{itemize}
+
 \subsubsection{Identify methods to access and use a virtual machine console}
+
+Always install VMware tools on guests.\\
+
+Console hot keys:
+
+\begin{description}
+
+\item[Ctrl-Alt]
+release mouse (when VMware tools are not installed)
+
+\item[Ctrl-Alt-Insert]
+send Ctrl-Alt-Delete to the guest
+
+\item[Ctrl-Alt-Enter]
+switch back and forth to full screen
+
+\end{description}
 
 \subsubsection{Identify virtual machine storage resources}
 
@@ -24,7 +74,20 @@ vSphere 5 uses VM hardware version 8, which supports:
 
 \subsubsection{Configure and Deploy a Guest OS into a new virtual machine}
 
+To deploy a guest OS onto a new VM you need an ISO on one of the following:
+
+\begin{itemize}
+\item local VMFS datastore on server or SAN
+\item physical media on ESXi server (CD drive)
+\item client device, ISO file on you local computer or a network share
+\end{itemize}
+
 \subsubsection{Configure/Modify disk controller for virtual disks}
+
+Set in VM / Edit Settings / Hardware.\\
+
+Use VMware Paravirtual if there will be 2000 IOPS or more, otherwise use
+LSI Logic SAS.
 
 \subsubsection{Configure appropriate virtual disk type for a virtual machine}
 
@@ -35,6 +98,46 @@ vSphere 5 uses VM hardware version 8, which supports:
 Disk shares are relevant only within a given host.
 
 \subsubsection{Install/Upgrade/Update VMware Tools}
+
+VMware tools are drivers, an application and configuration that are installed
+after the guest OS is installed to enhance it. They provide an interface
+between the guest and the virtualization layer. Without them you lose
+important functionality and convenience.\\
+
+To install or upgrade VMware tools go to VM / Guest / Install/Upgrade VMware
+tools.\\
+
+On the guest VMware tools appears as a simple application: VMwareService.exe
+on Windows and vmware-guestd on Linux and Solaris.\\
+
+VMware tools provide time-sync between the host and guest and on Windows
+control grabbing and releasing the mouse when in the console.\\
+
+VMware Tools control panel can be used to modify and shrink virtual disks and
+connects and disconnect virtual devices.\\
+
+Scripts can be configured to run when the power state of a VM changes.\\
+
+The VMware user process (VMwareUser.exe on Windows and vmware-user on Linux
+and Solaris) enables copy and paste of text between guest and host.\\
+
+VMware Tools Installers are ISO images that are installed when ESXi is
+installed.\\
+
+Without VMware tools the guest shutdown and restart options in vSphere client
+do not work.\\
+
+Installing VMware tools in Linux:
+
+\begin{itemize}
+\item use rpm or tar installer (rpm is preferred)
+\item for tar run vmware-install.pl
+\item run vmware-config-tools.pl
+\item tools are installed in /usr/lib/vmware-tools
+\item configuration files are in /etc/vmware-tools
+\item executables are in /usr/bin
+\item to start vmware toolbox run vmware-toolbox
+\end{itemize}
 
 \subsubsection{Configure virtual machine time synchronization}
 

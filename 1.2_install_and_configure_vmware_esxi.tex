@@ -1,5 +1,8 @@
 \subsection{Install and Configure VMware ESXi}
 
+ESXi is the hypervisor running on each physical server (the virtualization
+OS).\\
+
 In vSphere 5, ESX has been completely replaced with ESXi.\\
 
 ESXi is a thin install and doesn't have all drivers. Image builder can build
@@ -40,6 +43,9 @@ different subnets)
 \end{itemize}
 
 \subsubsection{Configure NTP on an ESXi Host}
+
+To configure NTP on a host using vSphere Client go to Host / Configuration /
+Time Configuration.
 
 \subsubsection{Configure DNS and Routing on an ESXi Host}
 

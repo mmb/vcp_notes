@@ -1,6 +1,102 @@
 \subsection{Install and Configure vCenter Server}
 
-vCenter has enhanced logging support in vSphere 5 (look up new features).
+\begin{description}
+
+\item[vCenter Server]
+centralized management console for the entire virtualization infrastructure
+
+\item[vSphere Client]
+connects to vCenter server
+
+\item[vMA]
+Linux based virtual appliance, gives service console like ESX used to
+
+\end{description}
+
+vCenter entities:
+
+\begin{description}
+
+\item[Datacenter]
+storage container inside vCenter to manage ESXi hosts, resource pools, folders,
+VMs, etc.
+
+\item[VM]
+virtual machine, virtualized guest operating system running inside ESXi
+
+\item[Host]
+server running ESXi
+
+\item[Guest]
+virtualized guest operating system running on a VM
+
+\item[Datastore]
+storage for VMs, virtual representation of combinations of underlying
+physical storage resources
+
+\item[Folder]
+way to group other entities together in a hierarchy
+
+\item[Resource Pool]
+partitions of computing and memory resources from a single host or cluster
+
+\item[Cluster]
+aggregate computing and memory resources of a group of physical x86 servers
+sharing the same network and storage arrays
+
+\item[Network]
+virtual networks, connect VMs
+
+\end{description}
+
+vCenter has enhanced logging support in vSphere 5 (look up new features).\\
+
+A naming convention for hosts and virtual machines is critical.\\
+
+Inventory can be organized by physical site, company division, purpose of
+infrastructure, or another system that makes sense to the organization. The
+way the entities are organized will be used later for giving access to specific
+users and groups.
+
+\begin{itemize}
+
+\item root can contain
+
+  \begin{itemize}
+  \item folder
+  \item datacenter
+  \end{itemize}
+
+\item folder can contain
+
+  \begin{itemize}
+  \item folder
+  \item datacenter
+  \end{itemize}
+
+\item datacenter can contain
+
+  \begin{itemize}
+  \item folder
+  \item cluster
+  \item host 
+  \item virtual machine
+  \end{itemize}
+
+\end{itemize}
+
+vCenter Server Settings:
+
+\begin{itemize}
+\item manage licensing
+\item database calculator
+\item vCenter unique id (used for linked mode)
+\item SMTP server for alerts
+\item SNMP receivers
+\item client timeout settings
+\item logging options
+\item maximum number of database connections (default 50)
+\end{itemize}
 
 \subsubsection{Identify all available vCenter Server Editions}
 
@@ -14,6 +110,9 @@ vCenter has enhanced logging support in vSphere 5 (look up new features).
 
 \subsubsection{Install/Remove vSphere Client plug-ins}
 
+Some vCenter server plug-ins require client plug-ins that must be installed
+on each client.
+
 \subsubsection{Enable/Disable vSphere Client plug-ins}
 
 \subsubsection{License vCenter Server}
@@ -22,4 +121,36 @@ vCenter has enhanced logging support in vSphere 5 (look up new features).
 
 \subsubsection{Determine use case for vSphere Client and Web Client}
 
-The vSphere web client has been improved in vSphere 5.
+The vSphere client only displays what you have licensed (the rest is grayed
+out).\\
+
+vSphere client can connect to vCenter server or directly to an ESXi server.\\
+
+vSphere client can show different views and will remember the last view used
+in a connection. It has ``back'' functionality like a web browser.\\
+
+The vSphere Client status bar shows tasks, alarms and the currently logged in
+user.\\
+
+The vSphere web client has been improved in vSphere 5.\\
+
+The vSphere client has keyboard shortcuts for each view (Ctrl-Shift-h goes to
+the Hosts and Clusters view).\\
+
+Advanced Search in the vShere Client can be used to search with many different
+types of criteria (such as all VMs where VMware tools are out-of-date). If
+using linked mode it can search across multiple vCenters.\\
+
+Data tables in the vSphere Client can be exported to HTML, XLS, CSV, etc.\\
+
+The vSphere client can can reports such as host summary reports and performance
+reports.\\
+
+To get rid of Getting Started tabs in vSphere Client, go to
+Edit / Client Settings and uncheck show getting started tab.\\
+
+Internet Explorer Enhanced Security can interfere with the Host / Hardware
+Status tab. It can be turned off in Windows Server Manager.\\
+
+vCenter Client be used to review system logs. A message of the day can be set
+to give users important information.
