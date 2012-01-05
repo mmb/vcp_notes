@@ -2,6 +2,29 @@
 
 \subsubsection{Identify available vSphere editions and features}
 
+\begin{description}
+
+\item[vSphere Hypervisor]
+free, cannot be used with vCenter, limited features
+
+\item[vSphere Essentials kit]
+3 hosts with two CPUs each, maximum pooled vRAM of 192GB, includes vCenter
+
+\item[vSphere Essentials Plus kit]
+adds vMotion, HA, Data Recovery
+
+\item[vSphere Acceleration kits]
+standard, enterprise and enterprise plus
+
+\item[vSphere]
+ESXi per CPU socket and vRAM entitlement (does not include vCenter), standard,
+enterprise and enterprise plus (advanced is no longer available)
+
+\end{description}
+
+Enterprise Plus is required for many new vSphere 5 features such as auto deploy,
+and storage DRS.
+
 \subsubsection{Explain ESXi and vCenter Server architectures}
 
 To see the services associated with vCenter in the vSphere Client go to
