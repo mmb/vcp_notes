@@ -2,6 +2,19 @@
 
 \subsubsection{Identify VMFS and NFS Datastore properties}
 
+VMFS is the VMware filesystem, a specialized virtualization clustered
+filesystem that provides distributed locking. VMFS can be local, iSCSI or
+Fibre Channel. If NFS is being used, VMFS is not being used.\\
+
+VMFS is optimized for VMs and high performance. It does not have a lot of
+features compared to NTFS or other filesystems.\\
+
+VMFS-5 is the latest version of VMFS. The maximum disk size for a VM is
+64TB. The best practice is to format LUNs with and 8M block size?
+
+Centralized storage is required for many advanced features of vSphere like
+vMotion, HA, FT and DRS. Usually the central storage is a SAN.\\
+
 Storage congestion threshold is set per datastore and is associated with
 storage IO control.
 
@@ -39,6 +52,9 @@ storage IO control.
 \subsubsection{Place a VMFS Datastore in Maintenance Mode}
 
 \subsubsection{Select the Preferred Path for a VMFS Datastore}
+
+ESXi fully supports SAN multipathing. Multpathing means there are multiple
+paths through HBAs and FC switches to the same LUNs for redundancy.
 
 \subsubsection{Disable a path to a VMFS Datastore}
 

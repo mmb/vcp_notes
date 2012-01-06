@@ -1,5 +1,70 @@
 \subsection{Configure Shared Storage for vSphere}
 
+vSphere provides host-level storage virtualization, which logically abstracts
+the physical storage layer from virtual machines.
+
+\begin{itemize}
+
+\item VMs are not aware of storage
+
+\item VMs use virtual disks
+
+\item virtual disks are easier to manage
+
+\item VMs use virtual SCSI controllers to access virtual disks that are on
+VMFS datastores, NFS datastores or raw disk mapping (RDM)
+
+\end{itemize}
+
+ESXi storage options:
+
+\begin{itemize}
+\item local disk with VMFS datastore
+\item SAN - iSCSI software, iSCSI hardware, Fibre Channel
+\item NAS - NFS
+\item VSA - vSphere Storage Appliance
+\end{itemize}
+
+\begin{description}
+
+\item[block level]
+presentation of storage that can be formatted and managed as a local drive,
+for example, a Windows host that has been presented with a unit of storage
+from a SAN views the storage as if it were a local disk and the host
+is permitted to format the disk, includes iSCSI, FC and local disk
+
+\item[file level transfer]
+presentation of storage that has been formatted and is managed by the host
+presenting the storage, for example, a Windows host with a mapped drive to a
+shared directory does not have the ability to format the drive, includes
+NFS and CIFS
+
+\end{description}
+
+\begin{tabular}{ | c | p{2cm} | p{2cm} | c | c | c | }
+\hline
+& Protocol & Hardware & Data Transfer & Performace & Cost \\ \hline
+NAS & SMB/FS over TCP/IP & NIC (1G or 10G) & file level & low to high & low \\ \hline
+iSCSI & SCSI over TCP/IP & NIC or iSCSI HBA (1G or 10G) & block level & medium to high & medium \\ \hline
+fibre channel & SCSI over Fiber Channel & Fibre Channel HBA (2, 4 or 8G) & block level & high & high \\ \hline
+\end{tabular}\\
+
+SAN could be iSCSI or Fibre Channel. Fibre Channel SAN packages SCSI commands
+into FC frames. The servers connects to the SAN using an HBA (similar to a
+NIC). The HBA connects to a Fibre Channel switch (known as a fabric). The FC
+switch connects to a storage processor (SP).\\
+
+SAN Benefits
+
+\begin{itemize}
+\item maintenance with zero downtime
+\item load balancing with vMotion and svMotion
+\item storage consolidation and central management
+\item disaster recovery
+\item array migrations and storage updates
+\item use of advanced features
+\end{itemize}
+
 \subsubsection{Identify storage adapters and devices}
 
 Storage adapter types:
@@ -15,18 +80,50 @@ Storage adapter types:
 
 \begin{description}
 
+  \item[extent] a disk area that can be added to a datastore
+
   \item[HBA] host bus adapter, storage interface card
 
   \item [LUN] logical unit number, a device addressed by SCSI, iSCSI or Fiber
-    Channel, logical disk
+    Channel, logical disk, aggregate of physical disks, can be a RAID group
 
-  \item[WWN] world-wide name, uniquely identifies a Fiber Channel adapter
+  \item[RDM] raw device mapping, special type of storage disk where ESXi
+    controls disk access
+
+  \item[spanned volume]
+    dynamic volume spread across a number of extents
+
+  \item[WWN] world-wide name, uniquely identifies a Fiber Channel adapter,
+    like a MAC address, 64-bit address
 
   \item[target] a single storage unit that the host can access
 
 \end{description}
 
+ESXi natively supports a number of brands of Fibre Channel HBAs.
+
 \subsubsection{Identify storage naming conventions}
+
+Fibre Channel SAN LUNs are addressed using a 4-part address:
+
+\begin{verbatim}
+vmhba#:storage processor#:LUN#:PARTITION#
+\end{verbatim}
+
+vmhba0:0:1 is vmhba0 / SP 0 / LUN 1.\\
+
+An address is like a route in this case.\\
+
+iSCSI uses IQN (iSCSI qualified name) to identify SCSI targets and initiators.
+It is the equivalent of WWN in Fibre Channel.\\
+
+IQN format:\\
+
+\begin{verbatim}
+year-month.reversed domain:organizational unique id
+\end{verbatim}
+
+The date is the date the domain was registered.\\
 
 Some storage vendors present a single target with multiple LUNs, some present
 multiple targets with one LUN each.\\
@@ -38,12 +135,56 @@ Runtime name is not a reliable identifier for a device and is not persistent.
 
 \subsubsection{Identify hardware/dependent hardware/software iSCSI initiator requirements}
 
-Dependent hardware iSCSI] depends on VMware networking and interfaces provided
+\begin{description}
+\item[iSCSI]
+internet small computer system interface, uses IP network
+\end{description}
+
+iSCSI is cheaper than Fibre Channel in many ways (components, network
+infrastructure). It can used existing hardware and supports almost all vSphere
+features.\\
+
+iSCSI it not as reliable as Fibre Channel and does not perform as well.\\
+
+An ESXi server can have an iSCSI hardware initiator (a special iSCSI NIC
+installed in the server) or a software initiator which is all in software and
+uses the existing NIC. You can boot from SAN when using iSCSI only if using a
+hardware HBA.\\
+
+iSCSI SANs call the disk array a target because it can be any storage attached
+to a server, not necessarily a disk array.\\
+
+Dependent hardware iSCSI depends on VMware networking and interfaces provided
 by VMware.
 
 \subsubsection{Compare and contrast array thin provisioning and virtual disk thin provisioning}
 
 \subsubsection{Describe zoning and LUN masking practices}
+
+Zoning is the grouping of HBAs and giving the groups access to certain LUNs.
+A zone is a set of HBA WWNs.\\
+
+Zoning is the process of allowing ESXi hosts to communicate with a storage
+device through the Fiber Channel switched fabric.\\
+
+Zoning is performed from the management interface of the Fibre Channel Switch.\\
+
+A relationship between the ESXi hosts and LUNs is created through storage
+groups.\\
+
+\begin{description}
+
+\item[soft zoning]
+SP controls the visibility of LUNs to HBAs
+
+\item[hard zoning]
+occurs at FC switch level, controls of visibility of SPs on a per-port basis
+
+\item[LUN masking]
+can occur at SP level or at the host level (for example, make host esx01 not be
+able to see luns 3 and 4)
+
+\end{description}
 
 \subsubsection{Scan/Rescan storage}
 
@@ -57,17 +198,45 @@ In vSphere 5, Storage IO Control supports NFS.
 
 \subsubsection{Connect to a NAS device}
 
+NAS is network attached storage. ESXi can use NFS NAS.
+
 \subsubsection{Enable/Configure/Disable vCenter Server storage filters}
 
 \subsubsection{Configure/Edit hardware/dependent hardware initiators}
 
 \subsubsection{Enable/Disable software iSCSI initiator}
 
+\begin{enumerate}
+\item enable software iSCSI in the host firewall
+\item add storage adapter to host
+\end{enumerate}
+
 \subsubsection{Configure/Edit software iSCSI initiator settings}
+
+You can alias iSCSI software initiators with your own names.
+
+Making iSCSI discover LUNs available to the target can be done statically
+or dynamically:
+
+\begin{description}
+
+\item[static]
+provide ip address of iSCSI server and target name
+
+\item[dynamic]
+provide ip address of iSCSI server, discovers targets
+
+\end{description}
+
+You need to bind one or more physical NICs to they can be used to communicate
+with the target device.
 
 \subsubsection{Configure iSCSI port binding}
 
 \subsubsection{Enable/Configure/Disable iSCSI CHAP}
+
+The target authenticates the host and optionally the host can authenticate the
+target.
 
 \subsubsection{Determine use case for hardware/dependent hardware/software iSCSI initiator}
 
