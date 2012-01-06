@@ -107,6 +107,56 @@ vCenter Server Settings:
 
 \subsubsection{Deploy the vCenter Appliance}
 
+vCSA is a new option for deploying vCenter in vSphere 5. It is a Linux virtual machine optimized
+for running vCenter server.\\
+
+No installation needs to be performed.\\
+
+Pros
+
+\begin{itemize}
+\item supports all traditional vCenter server features likes DRS, SDRS, HA, host profiles,
+dvSwitch,etc.
+\item no Windows license is required
+\item no Windows install
+\item no vCenter install
+\item deployment is simple and fast
+\end{itemize}
+
+Cons
+
+\begin{itemize}
+\item doesn't support SQL Server as an external database
+\item linked mode doesn't work
+\item vCenter Server heartbeat doesn't work
+\item no single sign-on using Windows session credentials
+\item vSphere Storage Appliance (VSA) is not compatible
+\end{itemize}
+
+You will need an installed ESXi server and the vSphere Client.
+
+\begin{enumerate}
+\item download the .OVF files, appliance data disk and appliance system disk from vmware.com
+\item deploy OVF in vSphere Client. Initial credentials are root/vmware
+\item perform network and timezone configuration using the text menu in the console
+\item vCSA should have a static IP address and DNS host record on your DNS server
+\item Test Settings and Save Settings in the database tab of the web GUI (port 5480)
+\item start vCenter Service on the vCSA VM
+\item set a static IP
+\item set the timezone
+\item change the root password
+\item configure Windows AD authentication
+\item size the embedded database
+\item restart the VCSA VM
+\end{enumerate}
+
+The vCSA has the vSphere web client installed and running by default.\\
+
+You need to add permissions for an AD group for AD users to be able to login. It does not
+default to the Administrators group of the domain that the vCenter server is in like the Windows
+vCenter. When connecting to the vCSA with vSphere Client you need to prefix the username with
+the domain when using AD.
+
 \subsubsection{Install vCenter Server into a virtual machine}
 
 vCenter Server can be physical or virtual. VMware best practices recommend virtual.\\
