@@ -3,15 +3,18 @@
 \begin{description}
 
 \item[vCenter Server]
-centralized management console for the entire virtualization infrastructure
+centralized management console for the entire virtualization infrastructure, serves as a proxy
+for managing ESXi hosts and their virtual machines
 
 \item[vSphere Client]
-connects to vCenter server
+connects to vCenter server and ESXi hosts
 
 \item[vMA]
 Linux based virtual appliance, gives service console like ESX used to
 
 \end{description}
+
+vCenter is a requirement for enterprise features.\\
 
 vCenter entities:
 
@@ -106,6 +109,83 @@ vCenter Server Settings:
 
 \subsubsection{Install vCenter Server into a virtual machine}
 
+vCenter Server can be physical or virtual. VMware best practices recommend virtual.\\
+
+vCenter can participate in HA and be vMotioned.\\
+
+If vCenter goes down in an environment with a lot of hosts, to find which server vCenter
+is on you need to log in to each host manually. Use an affinity rule to avoid this.\\
+
+vCenter heartbeat can be used when vCenter is virtual.\\
+
+vCenter Pre-installation
+
+\begin{itemize}
+\item to be part of a domain
+\item to have a static IP and hostname
+\item a back-end database
+\item correct time and date
+\item server must be in DNS and must be resolvable from all ESXi hosts
+\item should not be a domain controller
+\item account installed under should be a member of administrator group, act as part of the
+operating system and log on as a service
+\end{itemize}
+
+vCenter Features
+
+\begin{itemize}
+\item ESXi management
+\item VM management
+\item Update Manager
+\item Converter Enterprise
+\item templates
+\item access control
+\end{itemize}
+
+vCenter Hardware and Software Requirements
+
+\begin{itemize}
+\item 2 64-bit CPU or 1 64-bit dual core CPU (2GHz or better)
+\item 4G RAM (more if database is on the same server)
+\item 4GB disk (more if database is on the same server)
+\item 1GB or better networking
+\item Windows Server 2003 Std, Ent or Datacenter 64-bit SP2, 2003 R2 Std, End, or Datacenter
+64-bit SP1, 2008 Std, Ent or Datacenter 64-bit SP2, 2008 R2 Std, Ent, or Datacenter 64-bit
+\item .NET 3.5 SP1 Framework
+\item Windows Installer 4.5 (if using SQL 2008 R2 Express)
+\end{itemize}
+
+Database Requirements
+
+\begin{itemize}
+\item Microsoft SQL Server 2008 R2 Express (default, for demos and eval)
+\item DB2 9.5 and 9.7
+\item SQL Server 2005
+\item SQL Server 2008 and 2008 R2
+\item Oracle 10g R2 and 11g
+\end{itemize}
+
+vCenter database calculator can estimate database space required based on number of hosts,
+VMs and amount of statics required. It can be found in vCenter Server Setting from the
+Home Screen.
+
+Port Requirements
+
+\begin{itemize}
+\item 80/443 for Web access
+\item 902 for heartbeat, ESXi management and VM console
+\item 8080 / 8443 for web services and HTTPS web services
+\item 389 for LDAP, can be changed
+\item 636 for vCenter Linked Mode, can be changed
+\item 60099 web service change service notification
+\item 10443 vCenter Inventory Service HTTPS
+\item 10109 vCenter Inventory Serice Management
+\item 10111 vCenter Inventory Service Linked Mode Communications
+\end{itemize}
+
+When using a database on another server you must set up the 64-bit DSN for that database so you
+can select it when installing vCenter.
+
 \subsubsection{Size the vCenter Server database}
 
 \subsubsection{Install additional vCenter Server Components}
@@ -118,6 +198,10 @@ on each client.
 \subsubsection{Enable/Disable vSphere Client plug-ins}
 
 \subsubsection{License vCenter Server}
+
+The evaluation version is good for 60 days.\\
+
+License keys can be added from Licensing on the Home screen.
 
 \subsubsection{Determine availability requirements for a vCenter Server in a given vSphere implementation}
 
