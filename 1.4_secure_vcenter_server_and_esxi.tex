@@ -1,15 +1,70 @@
 \subsection{Secure vCenter Server and ESXi}
 
-Enable tech support mode on the ESXi server enables the ESXi shell (a command-line interface on
-the physical server console).\\
+Enable tech support mode on the ESXi server enables the ESXi shell
+(a command-line interface on the physical server console).\\
 
 Enabling remote tech support on the ESXi server enables ssh.\\
 
-Both are found in Troubleshooting Options on the ESXi console.
+Both are found in Troubleshooting Options on the ESXi console.\\
+
+All vSphere client communications are encrypted.
+
+VLANs can be used to segment service console traffic.
+
+ESXi server has local Linux-like accounts.\\
+
+It is not possible to run vCenter for Windows on a Windows Active Directory
+domain controller.
 
 \subsubsection{Identify common vCenter Server privileges and roles}
 
+Default vSphere security roles:
+
+\begin{itemize}
+\item no access
+\item read-only
+\item administrator
+\end{itemize}
+
+Sample roles:
+
+\begin{itemize}
+\item VM power user
+\item VM user
+\item resource pool admin
+\item VCB user
+\item datastore consumer
+\item network consumer
+\end{itemize}
+
+ESXI default users:
+
+\begin{itemize}
+\item vpxuser
+\item dcui
+\item root
+\end{itemize}
+
 \subsubsection{Describe how permissions are applied and inherited in vCenter Server}
+
+Users and groups are assigned roles.\\
+
+Roles are assigned to objects.\\
+
+Combining users and groups with a roles are permissions.\\
+
+Permissions are inherited in hierarchical manner. Permission changes take
+effect immediately (you do not need to re-login).\\
+
+vCenter installed on Windows uses Windows Active Directory accounts. vCenter
+as a Linux appliance can use Windows Active Directory accounts.\\
+
+Defining permissions on vCenter object using Active Directory users and groups
+is recommended.\\
+
+By default only root can login to ESXi and only Windows AD administrators on
+the vCenter server can login to vCenter (assuming vCenter is installed on
+Windows).\\
 
 \subsubsection{Configure and administer the ESXi firewall}
 
