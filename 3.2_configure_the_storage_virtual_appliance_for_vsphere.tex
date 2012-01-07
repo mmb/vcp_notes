@@ -1,0 +1,68 @@
+\subsection{Configure the Storage Virtual Appliance for vSphere}
+
+The vSphere Storage Appliance is new in vSphere 5.\\
+
+The VSA is not included with any version of vSphere. It costs \$5995 per
+instance and can use up to 3 nodes. vSphere Essentials Plus with the VSA
+costs \$7995.
+
+\subsubsection{Define Storage Virtual Appliance (SVA) architecture}
+
+The VSA provides NFS storage using the local storage across up to 3 ESXi
+servers.\\
+
+Each ESXi server has a special VSA VM vm on it. There is a 1:1 relationship
+between vCenter and VSA and they must be on the same subnet.
+
+The VSA is fully redundant.\\
+
+VSA uses RAID 1 across nodes and RAID 10 within each node.\\
+
+\subsubsection{Configure ESXi hosts as SVA hosts}
+
+The ESXi servers must be a fresh install.\\
+
+Multiple NICs are highly recommended.\\
+
+vCenter must not be running as a VM on the ESXi hosts in the cluster.\\
+
+There cannot be any VMs running on the ESXi hosts during VSA installation.\\
+
+There can only be one datastore on the ESXi host and it must be a local disk
+(there cannot be any SAN connections on the server).
+
+\subsubsection{Configure the storage network for the SVA}
+
+\subsubsection{Deploy/Configure the SVA Manager}
+
+\subsubsection{Administer SVA storage resources}
+
+VSA san maintenance mode options:
+
+\begin{itemize}
+\item entire VSA cluster
+\item single VSA node
+\end{itemize}
+
+If a node is taken out of the cluster, changed blocks are tracked until the
+node is added again. If a new node is added a full sync is done.
+
+\subsubsection{Determine use case for deploying the SVA}
+
+Shared storage (SAN or NAS) is required to implement many of VMware's core
+features like vMotion, VMHA, and DRS. Due to high costs, many companies have
+been unable to implement these features. The VSA will allow all customers to
+affordably implement a SAN and use advanced vSphere features.\\
+
+VSA requires no additional hardware (CAPEX savings) and requires no dedicated
+SAN administration (OPEX savings).
+
+\subsubsection{Determine appropriate ESXi host resources for the SVA}
+
+Only a short list of physical servers are supported by VMware.\\
+
+Must have 6GB of ram minimum per server.\\
+
+Each ESXi host must have a RAID controller that supports RAID10.\\
+
+All ESXi servers must have the same hardware configuration.\\
