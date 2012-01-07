@@ -1,6 +1,37 @@
 \subsection{Migrate Virtual Machines}
 
+vMotion is moving running VMs from one machine to another. The VM's disk files
+stay where they are on shared storage.
+
+Uses for vmotion:
+
+\begin{itemize}
+\item balance the load on ESXi servers (DRS)
+\item save power by shutting down ESXi (DPM)
+\item patching and maintenance on ESXi servers (update manager, hardware
+maintenance)
+\end{itemize}
+
+New vMotion features in vSphere 5:
+
+\begin{itemize}
+
+\item multi-nic vmotion support, vmotion will use up to 16 1G nics or up to 4
+10G nics nics for better performance
+
+\item stun during page send, tells vCPUs of server to slow down to give
+vMotion a chance to move a high-performance virtual machine
+
+\end{itemize}
+
 \subsubsection{Identify ESXi host and virtual machines requirements for vMotion and Storage vMotion}
+
+\begin{itemize}
+\item vSphere Essentials Plus, Standard, Enterprise or Enterprise Plus license
+\item shared storage between ESXi servers (iSCSI, FC, NFS)
+\item a vmkernel interface on both ESXi servers with vMotion enabled
+\item CPU compatibility, or family compatibility if using EVC on the cluster
+\end{itemize}
 
 \subsubsection{Identify Enhanced vMotion Compatibility CPU requirements}
 
