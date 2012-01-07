@@ -1,13 +1,25 @@
 \section{vShield}
 
 You can't import physical processes into the virtual environment. Physical
-approaches such as agent-based anti-virus don't work well.
+approaches such as agent-based anti-virus don't work well.\\
 
-\subsection{vShield Edge}
+\subsection{vShield Zones}
 
-Secures the edge of the virtual datacenter.
+vShield Zones is included with vSphere 5 Enterprise and Enterprise Plus.\\
+
+vShield Zones is a basic application-level firewall included in the 
+hypervisor. It can filter traffic between VMs and between VMs and the physical
+network.
+
+\subsection{vShield App}
+
+vShield App is a hypervisor-level firewall that does stateful filtering. It is
+an advanced version of vSphere Zones.
 
 \subsection{vShield App with Data Security}
+
+vShield App with Data Security finds insecure traffic and sensitive data
+going across the network.
 
 \begin{itemize}
 
@@ -16,18 +28,25 @@ Secures the edge of the virtual datacenter.
 
 \end{itemize}
 
+\subsection{vShield Edge}
+
+vShield Edge is virutal firewall for perimeter protection. It can protect
+an entire virtual infrastructures from the outside world.
+
+
+
+
 \subsection{vShield Endpoint}
 
-\begin{itemize}
-
-\item offload anti-virus processing
-
-\end{itemize}
+vShield Endpoint enables endpoint security and is a programmatic interface for
+third-party providers to create anti-virus software without having to install
+agents on each VM. It offloads anti-virus processing.
 
 \subsection{vShield Manager}
 
-\begin{itemize}
+vShield Manager is a centralized management interface for all vShield
+applications.
 
-\item centralized managment
+\subsection{VMware Go}
 
-\end{itemize}
+VMware Go is for keeping guest OSs and applications up to date.
