@@ -107,16 +107,16 @@ vCenter Server Settings:
 
 \subsubsection{Deploy the vCenter Appliance}
 
-vCSA is a new option for deploying vCenter in vSphere 5. It is a Linux virtual machine optimized
-for running vCenter server.\\
+vCSA is a new option for deploying vCenter in vSphere 5. It is a Linux virtual
+machine optimized for running vCenter server.\\
 
 No installation needs to be performed.\\
 
 Pros
 
 \begin{itemize}
-\item supports all traditional vCenter server features likes DRS, SDRS, HA, host profiles,
-dvSwitch,etc.
+\item supports all traditional vCenter server features likes DRS, SDRS, HA,
+host profiles, dvSwitch,etc.
 \item no Windows license is required
 \item no Windows install
 \item no vCenter install
@@ -136,11 +136,16 @@ Cons
 You will need an installed ESXi server and the vSphere Client.
 
 \begin{enumerate}
-\item download the .OVF files, appliance data disk and appliance system disk from vmware.com
+
+\item download the .OVF files, appliance data disk and appliance system disk
+from vmware.com
 \item deploy OVF in vSphere Client. Initial credentials are root/vmware
-\item perform network and timezone configuration using the text menu in the console
-\item vCSA should have a static IP address and DNS host record on your DNS server
-\item Test Settings and Save Settings in the database tab of the web GUI (port 5480)
+\item perform network and timezone configuration using the text menu in the
+console
+\item vCSA should have a static IP address and DNS host record on your DNS
+server
+\item Test Settings and Save Settings in the database tab of the web GUI (port
+5480)
 \item start vCenter Service on the vCSA VM
 \item set a static IP
 \item set the timezone
@@ -152,19 +157,21 @@ You will need an installed ESXi server and the vSphere Client.
 
 The vCSA has the vSphere web client installed and running by default.\\
 
-You need to add permissions for an AD group for AD users to be able to login. It does not
-default to the Administrators group of the domain that the vCenter server is in like the Windows
-vCenter. When connecting to the vCSA with vSphere Client you need to prefix the username with
-the domain when using AD.
+You need to add permissions for an AD group for AD users to be able to login.
+It does not default to the Administrators group of the domain that the vCenter
+server is in like the Windows vCenter. When connecting to the vCSA with vSphere
+Client you need to prefix the username with the domain when using AD.
 
 \subsubsection{Install vCenter Server into a virtual machine}
 
-vCenter Server can be physical or virtual. VMware best practices recommend virtual.\\
+vCenter Server can be physical or virtual. VMware best practices recommend
+virtual.\\
 
 vCenter can participate in HA and be vMotioned.\\
 
-If vCenter goes down in an environment with a lot of hosts, to find which server vCenter
-is on you need to log in to each host manually. Use an affinity rule to avoid this.\\
+If vCenter goes down in an environment with a lot of hosts, to find which
+server vCenter is on you need to log in to each host manually. Use an affinity
+rule to avoid this.\\
 
 vCenter heartbeat can be used when vCenter is virtual.\\
 
@@ -177,8 +184,8 @@ vCenter Pre-installation
 \item correct time and date
 \item server must be in DNS and must be resolvable from all ESXi hosts
 \item should not be a domain controller
-\item account installed under should be a member of administrator group, act as part of the
-operating system and log on as a service
+\item account installed under should be a member of administrator group, act as
+part of the operating system and log on as a service
 \end{itemize}
 
 vCenter Features
@@ -215,9 +222,9 @@ Database Requirements
 \item Oracle 10g R2 and 11g
 \end{itemize}
 
-vCenter database calculator can estimate database space required based on number of hosts,
-VMs and amount of statics required. It can be found in vCenter Server Setting from the
-Home Screen.
+vCenter database calculator can estimate database space required based on
+number of hosts, VMs and amount of statics required. It can be found in vCenter
+Server Setting from the Home Screen.
 
 Port Requirements
 
@@ -268,8 +275,6 @@ in a connection. It has ``back'' functionality like a web browser.\\
 The vSphere Client status bar shows tasks, alarms and the currently logged in
 user.\\
 
-The vSphere web client has been improved in vSphere 5. The web client requires Adobe Flash.\\
-
 The vSphere client has keyboard shortcuts for each view (Ctrl-Shift-h goes to
 the Hosts and Clusters view).\\
 
@@ -291,5 +296,18 @@ Status tab. It can be turned off in Windows Server Manager.\\
 vCenter Client be used to review system logs. A message of the day can be set
 to give users important information.\\
 
-vSphere Client is downloaded directly from vmware.com. An ESXi host or vCenter server
-will direct you there.
+vSphere Client is downloaded directly from vmware.com. An ESXi host or vCenter
+server will direct you there.\\
+
+The vSphere web client is new in vSphere 5. The web client requires Adobe Flash.
+Adobe Flash must also be installed on the server side for authorization.\\
+
+VMware has hinted that the web client is the future vSphere administration
+and that the Windows vSphere client (written in C\#) will go away.\\
+
+Installation of vSphere web client server is done from vCenter media. It is
+typically installed on the vCenter server.\\
+
+The vSphere web client can connect to multiple vCenter servers.\\
+
+vSphere client plugins do not work yet in the web client.
