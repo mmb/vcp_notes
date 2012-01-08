@@ -93,6 +93,24 @@ LSI Logic SAS.
 
 \subsubsection{Create/Convert thin/thick provisioned virtual disks}
 
+Virtual Disk Types
+
+\begin{description}
+
+\item[thick lazy zeroed]
+default, all space is allocated when the virtual disk is created, zeroed on
+demand when written
+
+\item[thick eager zeroed]
+all space is allocated when the virtual disk is created, zeroed when created
+(so creation takes longer), supports clustering features like fault tolerance
+
+\item[thin]
+disk starts small and uses more storage as needed, does not work with
+clustering like FT
+
+\end{description}
+
 \subsubsection{Configure disk shares}
 
 Disk shares are relevant only within a given host.

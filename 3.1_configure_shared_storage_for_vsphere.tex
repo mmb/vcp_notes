@@ -196,6 +196,10 @@ by VMware.
 
 \subsubsection{Compare and contrast array thin provisioning and virtual disk thin provisioning}
 
+Thin provisioned virtual disks start small and grow as needed. Array thin
+provisioning is the same concept applied to LUNs. The hosts see the LUNs as
+their full logical size.
+
 \subsubsection{Describe zoning and LUN masking practices}
 
 Zoning is the grouping of HBAs and giving the groups access to certain LUNs.
@@ -298,4 +302,22 @@ hardware iSCSI. In normal CHAP the target authenticates the host only.
 
 \subsubsection{Determine use case for hardware/dependent hardware/software iSCSI initiator}
 
+ESXi does not support multipathing when you combine an independent hardware
+adapter with software iSCSI or dependent iSCSI on the same host.
+
 \subsubsection{Determine use case for and configure array thin provisioning}
+
+Traditional LUNs are thick provisioned. When a LUN is thin-provisioned, the
+storage array reports reports the LUN's logical size which might be larger
+than the real physical capacity backing it.\\
+
+A VMFS datastore backed by a thin-provisioned LUN sees only the logical
+size.\\
+
+Using array integration APIs the host can monitor the use of space on
+thin-provisioned LUNs. The array can warn the host if space is low. The
+host can inform the array about freed datastore space so the array can reclaim
+it.\\
+
+For array thin provisioning ESXi 5.0 or later is required. The storage array
+must have firmware that suppors T10 Storage APIs.

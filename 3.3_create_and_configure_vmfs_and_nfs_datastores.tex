@@ -77,10 +77,34 @@ block and subblock sizes.
 \subsubsection{Select the Preferred Path for a VMFS Datastore}
 
 ESXi fully supports SAN multipathing. Multpathing means there are multiple
-paths through HBAs and FC switches to the same LUNs for redundancy.
+paths through HBAs and FC switches to the same LUNs for redundancy.\\
 
+When a path fails, storage I/O might pause for 30 to 60 seconds.
+
+Path Selection policies:
+
+\begin{description}
+
+\item[fixed]
+the host uses the designated preferred path if it has been set, if not the
+preferred path is the first working path discovered at boot time, default
+policy for most active-active storage devices
+
+\item[MRU]
+most recently used, the host selects the path it used most recently, when the
+path is down the host selects another path, default policy for most
+active-passive storage devices
+
+\item[round robin]
+host rotates through all active paths when connecting to active-passive arrays
+or through all available paths when connecting to active-active
+
+\end{description}
+ 
 \subsubsection{Disable a path to a VMFS Datastore}
 
+esxcli MASK\_PATH claim rule ?
+ 
 \subsubsection{Determine use case for multiple VMFS/NFS Datastores}
 
 \subsubsection{Determine appropriate Path Selection Policy for a given NFS Datastore}
