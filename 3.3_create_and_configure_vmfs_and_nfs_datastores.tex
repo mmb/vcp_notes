@@ -16,7 +16,9 @@ Centralized storage is required for many advanced features of vSphere like
 vMotion, HA, FT and DRS. Usually the central storage is a SAN.\\
 
 Storage congestion threshold is set per datastore and is associated with
-storage IO control.
+storage IO control.\\
+
+You can connect up to 128 hosts to a VMFS datastore.
 
 \subsubsection{Identify VMFS5 capabilities}
 
@@ -25,7 +27,8 @@ storage IO control.
 \item no more 2TB limit on VMFS volumes, the new limit is 64TB
 \item supports 2TB RDMs
 \item block size always 1 MB (no choice)
-\item atomic test and set (part of VAAI), locking mechanism
+\item atomic test and set (part of VAAI), locking mechanism, hardware assisted
+locking
 \item sub-blocks for space efficiency (8K)
 \item small file support (1K)
 \item space reclamation on thin provisioned LUNs (with enhanced VAAI)
@@ -43,11 +46,31 @@ storage IO control.
 
 \subsubsection{Create/Rename/Delete/Unmount a VMFS Datastore}
 
+Datastore delete permanently deletes all files associated with virtual
+machines on the datastore.
+
 \subsubsection{Mount/Unmount an NFS datastore}
 
 \subsubsection{Extend/Expand VMFS datastores}
 
+To increase the size of a datastore, you can add a new extent or grow an
+existing extent (which requires an extent with free space immediately after
+it).\\
+
+If a datastore has powered-on VMs and is 100\% full you can increase the its
+capacity only from the host that the VMs are registered on.
+
 \subsubsection{Upgrade a VMFS3 Datastore to VMFS5}
+
+ESXi 5.0 does not support VMFS2. ESX/ESXi 3 and 4 can use VMFS2 read only.\\
+
+VMFS5 only works with ESXi 5.0.\\
+
+VMFS2 must be upgraded to VMFS3 before upgrading to VMFS5.\\
+
+The upgrade to VMFS5 cannot be reverted. An upgraded VMFS5 datastore differs
+from a new VMFS5 datastore. Upgraded VMFS5 datastores retain their previous
+block and subblock sizes.
 
 \subsubsection{Place a VMFS Datastore in Maintenance Mode}
 

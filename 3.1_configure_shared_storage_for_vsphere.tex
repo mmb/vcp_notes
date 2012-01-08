@@ -88,7 +88,9 @@ Storage adapter types:
     Channel, logical disk, aggregate of physical disks, can be a RAID group
 
   \item[RDM] raw device mapping, special type of storage disk where ESXi
-    controls disk access
+    controls disk access, a mapping file on VMFS acts as a proxy, used when
+    applications need to access raw LUNs (Microsoft Clustering), think of
+    as a symbolic link from VMFS to LUN
 
   \item[spanned volume]
     dynamic volume spread across a number of extents
@@ -98,9 +100,44 @@ Storage adapter types:
 
   \item[target] a single storage unit that the host can access
 
+  \item[NPIV]
+    N-Port ID Virtualization, allows a single FC HBA port to register with the
+    fabric using multiple WWPNs, multiple FC initiators can share a single port,
+    NPIV is used only for VMs with RDM disks, used for fine-grained control
+    at the VM level, NPIV does not support storage vMotion
+
+\end{description}
+
+RDM has two modes:
+
+\begin{description}
+
+\item[virtual compatibility]
+RDM acts like virtual disk file, supports snapshots
+
+\item[physical compatibility]
+lower level, allows direct access to the SCSI device
+ 
 \end{description}
 
 ESXi natively supports a number of brands of Fibre Channel HBAs.
+
+Fibre Channel Storage Array Types
+
+\begin{description}
+
+\item[active-active]
+all paths can be active at the same time, access to LUNs through all storage
+ports at the same time
+
+\item[active-passive]
+one storage processor at a time is actively providing access to a LUN
+
+\item[asymmetrical]
+supports Asymmetric Logical Unit Access (ALUA), provides different levels of
+access per port, hosts determine states of targets ports and prioritize paths
+
+\end{description}
 
 \subsubsection{Identify storage naming conventions}
 
@@ -172,6 +209,8 @@ Zoning is performed from the management interface of the Fibre Channel Switch.\\
 A relationship between the ESXi hosts and LUNs is created through storage
 groups.\\
 
+For ESXi hosts the preferred zoning is single-initiator-single-target.
+
 \begin{description}
 
 \item[soft zoning]
@@ -190,6 +229,16 @@ able to see luns 3 and 4)
 
 \subsubsection{Identify use cases for FCoE}
 
+Converged Network Adapters (CNA) contain network and Fibre Channel
+functionality on the same hardware.\\
+
+ESXi can do software FCoE but requires a NIC with Data Center Bridhing (DCB)
+and I/O offloading capabilites.\\
+
+On switch ports used for FCoE that communicate with ESXi hosts, disable
+spanning tree protocol. It could delay FCoE initiation and cause an all
+path down condition.
+
 \subsubsection{Create an NFS share for use with vSphere}
 
 The NFS client built into ESXi uses NFS version 3.\\
@@ -201,6 +250,12 @@ In vSphere 5, Storage IO Control supports NFS.
 NAS is network attached storage. ESXi can use NFS NAS.
 
 \subsubsection{Enable/Configure/Disable vCenter Server storage filters}
+
+Storage filters help avoid storage device corruption or performance
+degradation that can be caused by an unsupported use of storage devices.\\
+
+For example, not showing LUNs that already have VMFS filesystems on them
+as candidates to be formatted.
 
 \subsubsection{Configure/Edit hardware/dependent hardware initiators}
 
@@ -224,19 +279,22 @@ or dynamically:
 provide ip address of iSCSI server and target name
 
 \item[dynamic]
-provide ip address of iSCSI server, discovers targets
+provide ip address of iSCSI server, discovers targets, also called SendTargets,
+you cannot discover LUNs with a LUN ID greater than 255
 
 \end{description}
 
 You need to bind one or more physical NICs to they can be used to communicate
-with the target device.
+with the target device.\\
 
 \subsubsection{Configure iSCSI port binding}
 
 \subsubsection{Enable/Configure/Disable iSCSI CHAP}
 
-The target authenticates the host and optionally the host can authenticate the
-target.
+CHAP (Challenge Handshake Authentication Protocol) is used to secure iSCSI
+connections using a CHAP name and secret. Mutual CHAP, where the initiator and
+target both authenticate each other is supported for software and dependent
+hardware iSCSI. In normal CHAP the target authenticates the host only.
 
 \subsubsection{Determine use case for hardware/dependent hardware/software iSCSI initiator}
 

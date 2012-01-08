@@ -20,7 +20,7 @@ Load balancing can be based on:
 \end{itemize}
 
 IP-based teaming requires that the physical switch be configured with
-etherchannel. When using other options etherchannel should be disabled.\\
+EtherChannel. When using other options EtherChannel should be disabled.\\
 
 When using iSCSI multipathing, the VMkernel interface must have one active
 adapter and no standby adapters.\\
@@ -63,6 +63,9 @@ physical switch ports are set to trunk, requires driver on virtual machine
 
 To use PVLANS, the physical switch connected to the host needs to support them.
 
+In a PVLAN, the connection type of the primary VLAN is promiscuous so that
+ports on the PVLAN can communicate with ports configured as the primary VLAN.
+
 \subsubsection{Configure traffic shaping policies}
 
 ESXi shapes outbound network traffic on standard switches and input and
@@ -75,7 +78,7 @@ up to 64K which are broken down into MTU-sized frames by the network adapter.
 
 \subsubsection{Enable Jumbo Frames support on appropriate components}
 
-Jumbo frames up to 9K are supported. The physical adapter must support jumbo
-frames.
+Jumbo frames are Ethernet frames larger than 1500 bytes. Jumbo frames up to 9K
+are supported. The physical adapter must support jumbo frames.
 
 \subsubsection{Determine appropriate VLAN configuration for a vSphere implementation}
