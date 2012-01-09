@@ -93,4 +93,29 @@ root can still log in on the direct console when lockdown mode is enabled.
 
 \subsubsection{Apply permissions to ESXi Hosts using Host Profiles}
 
+Host profiles encapsulate host configuration to maintain consistency and
+correctness.\\
+
+Host profiles are created by configuring a reference host. If the reference
+host changes the profile can be updated.\\
+
+\texttt{.vpf} is the VMware profile format. When a host profile is exported
+it is in this format. For security usernames and passwords are not included
+in the export.\\
+
+Host profiles are composed of sub-profiles such as:
+
+\begin{itemize}
+\item memory reservation
+\item storage
+\item networking
+\item data and time
+\item firewall
+\item security
+\item service
+\item advanced
+\end{itemize}
+
+A host must be in maintenance mode to apply a profile.
+
 \subsubsection{Determine the appropriate set of privileges for common tasks in vCenter Server}
