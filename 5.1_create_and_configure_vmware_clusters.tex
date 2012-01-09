@@ -9,6 +9,94 @@ you cannot mix AMD and Intel in the same cluster.
 
 \subsubsection{Create/Delete a DRS/HA Cluster}
 
+HA protects against server failure by restarting virtual machines on other
+hosts within the cluster. It also protects against application failure by
+monitoring a VM and resetting it if a failure occurs.\\
+
+VMware Tools heartbeats can reboot a VM is the guest OS crashes.\\
+
+When a host is added to a vSphere cluster an agent is put on it to
+communicate with agents on other hosts. HA uses TCP and UDP port 8182 for
+agent to agent communication. It uses the vpxuser account. The agent can
+be added to auto deployed hosts using an image profile.\\
+
+A single host is elected as master by all hosts. The host that mounts the
+most datastores has an advantage in the election.\\
+
+The master:
+
+\begin{itemize}
+\item monitors slave hosts
+\item monitors the power states of all protected VMs and restart them if needed
+\item manages a list of cluster hosts and protected VMs
+\item is vCenter Server's interface to the cluster
+\end{itemize}
+
+The master distinguishes between failed hosts and network-isolated hosts using
+datastore heartbeats.\\
+
+Slaves report their VM state updates to master.\\
+
+A master host commits to protecting a VM when it observes the power state
+changing to on in response to a user action. The master locks a file on the
+VM's datastore to claim responsibility for restarting it.\\
+
+Types of host failure:
+
+\begin{itemize}
+\item host fails
+\item host becomes network isolated
+\item host loses connection to master
+\end{itemize}
+
+When master stops receiving heartbeats from slaves, it checks the datastore
+heartbeat and pings the management IP. If the datastore heartbeat is ok, the
+master assumes a network partition.\\
+
+There is a preferred set of datastores for heartbeating. The default number
+of heartbeat datastores is two.\\
+
+When a host sees no HA traffic it pings the cluster isolation address. If it
+cannot reach it, it declares itself isolated from the network.\\
+
+Host isolation response options:
+
+\begin{itemize}
+\item leave powered off (default)
+\item power off
+\item shutdown
+\end{itemize}
+
+This option can be set on individual VMs.\\
+
+During a network partition, vCenter Server will power on VMs but they are
+only protected if they are on the same partition as the master that is
+responsible for them. Also host configuration changes might not propagate to
+all hosts.
+
+During a split brain scenario VMs might be running on multiple hosts at the
+same time.\\
+
+Hosts can be designated as failover hosts. Failover hosts will be used to
+restart VMs first. VMs cannot be powered on on or migrated to failover hosts.
+
+HA Changes for vSphere 5:
+
+\begin{itemize}
+
+\item no more primary / secondary, now master / slave
+\item one ESXi host is master
+\item FDM - fault domain manager
+\item failure detection using management network and storage communications
+\item one log file per server /etc/opt/vmware/fdm
+\item no reliance on DNS
+\item eliminate common issues
+\item IPv6 support
+\item enhanced UI
+\item enhanced deployment
+
+\end{itemize}
+
 \subsubsection{Add/Remove ESXi Hosts from a DRS/HA Cluster}
 
 When adding an ESXi host to e DRS/HA cluster you specify the hostname or
@@ -58,5 +146,93 @@ Storage DRS affinity rules can be based on:
 \subsubsection{Enable/Configure/Disable virtual machine and application monitoring}
 
 \subsubsection{Configure admission control for HA and virtual machines}
+
+\begin{description}
+
+\item[host]
+make sure a host has sufficient resources to satisfy the reservations of the
+VMs running on it
+
+\item[resource pool]
+make sure a resource pool can satisfy reservations, shares and limits of its
+VMs
+
+\item[vSphere HA]
+make sure the cluster has sufficient resources for virtual machines recovery
+if a host fails
+
+\end{description}
+
+Admission Control could prevent:
+
+\begin{itemize}
+\item powering on a VM
+\item migrating a VM to a host, cluster or resource pool
+\item increasing a CPU of memory reservation (this is the only check that can
+be disabled)
+\end{itemize}
+
+Slot size is a logical representation of memory and CPU resources. It is sized
+to satisfy the requirements for any powered-on VM in the cluster.\\
+
+Failover capacity admission control:
+
+\begin{enumerate}
+\item calculate slot size
+\item determine how many slots each host can hold
+\item determine cluster failover capacity
+\item if current failover capacity is less than configured failover capacity,
+disallow the operation
+\end{enumerate}
+
+CPU slot size is the largest CPU reservation or 32 MHz if there are no
+reservations.\\
+
+Memory slot size is the largest memory reservation plus memory overhead.\\
+
+Advanced options can be used to specify an upper bound on these.\\
+
+The number of VMs that a host can support is the smaller of CPU slots and
+memory slots.\\
+
+The current failover capacity is the number of hosts that can
+fail and leave enough slots to satisfy the requirements of all powered-on
+VMs.
+
+Host failures cluster tolerates policy can be too conservative in
+heterogeneous environments because it only considers the largest VM and assumes
+the largest host fails.\\
+
+Cluster resources reserved admission control:
+
+\begin{enumerate}
+
+\item calculate total resource requirements for all powered-on VMs in the
+cluster: sum of memory reservations plus overhead and CPU reservations of
+powered-on virtual machines
+
+\item calculate total host resources available for VMs
+
+\item calculate current CPU and memory failover capacity for the cluster:
+(total resources - required resources) / total resources
+
+\item if current failover capacity is less than configured failover capacity,
+disallow the operation
+
+\end{enumerate}
+
+The percentage of cluster resources policy does not address fragmentation.
+
+VM Restart Priority Options:
+
+\begin{itemize}
+\item disable (the VM is not restarted)
+\item low
+\item medium (default)
+\item high
+\end{itemize}
+
+VM guest and application can be monitored by checking for heartbeats from
+VMware tools and for I/O. Application monitoring requires the appropriate SDK.
 
 \subsubsection{Determine appropriate failover methodology and required resources for an HA implementation}

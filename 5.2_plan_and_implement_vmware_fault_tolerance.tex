@@ -1,0 +1,111 @@
+\subsection{Plan and Implement VMware Fault Tolerance}
+
+FT provides a higher level of availability than HA. FT creates and maintains
+a secondary VM that is identical to and continuously available to replace
+the primary VM if it fails. With FT there is no loss of data, transactions or
+connections when a failure occurs.\\
+
+The primary and secondary in an FT pair are identical at any point in
+instruction execution. Using VMware Lockstep, the VMs execute identical x86
+instructions.\\
+
+FT logging traffic is not encrypted.\\
+
+The primary and secondary VMs exchange heartbeats. If the primary fails,
+the secondary is activated and a new secondary is created.\\
+
+The primary and secondary cannot run on the same host.\\
+
+FT can be used with DRS when EVC is enabled. This gives FT machines better
+initial placement and includes them in the cluster's load balancing
+calculations.\\
+
+DRS will not place more than four FT VMs on a host. This is configurable.\\
+
+\subsubsection{Identify VMware Fault Tolerance requirements}
+
+FT works even if vCenter is unavailable.
+
+Cluster Requirements
+
+\begin{itemize}
+\item HA-enabled cluster
+\item host certificate checking must be enabled
+\item at least two FT-certified hosts running the same FT version
+\item hosts must have access to the same datastores and networks
+\item FT logging and vMotion networks must be configured
+\end{itemize}
+
+Host Requirements
+
+\begin{itemize}
+\item FT-compatible processors.
+\item licensed and certified for FT
+\item hardware virtualization enabled in the BIOS
+\end{itemize}
+
+Virtual Machine Requirements
+
+\begin{itemize}
+\item no unsupported devices attached
+\item must use virtual RDM or VMDK disks that are thick provisioned
+\item incompatible features must not be running
+\item must be on shared storage
+\item must only have 1 vCPU
+\item guest OS must be supported
+\end{itemize}
+
+vSphere features not supported with FT:
+
+\begin{itemize}
+\item snapshots
+\item storage vMotion
+\item linked clones
+\item backups with VMware Data Recovery, etc.
+\end{itemize}
+
+VM features not supported with FT:
+
+\begin{itemize}
+\item SMP processors
+\item physical RDM
+\item CD-ROM or floppy backed by a physical or remote device
+\item paravirtualized guests
+\item USB and sound devices
+\item NPIV
+\item NIC passthrough
+\item vlance NIC drivers
+\item think provisioned disks
+\item hot-plugging devices
+\item EPT/RVI (extended page tables / rapid virtualization indices)
+\item serial and parallel ports
+\item IPv6
+\item video cards with 3D enabled
+\end{itemize}
+
+To change the network a NIC on an FT VM is plugged into, FT must be disabled
+first.\\
+
+When FT is turned on, the VMs memory limit is set to its memory size.
+Memory reservation, size, limit and shared cannot be changed while FT is on.
+
+\subsubsection{Configure VMware Fault Tolerance networking}
+
+\subsubsection{Enable/Disable VMware Fault Tolerance on a virtual machine}
+
+\subsubsection{Test an FT configuration}
+
+\subsubsection{Determine use case for enabling VMware Fault Tolerance on a virtual machine}
+
+\begin{itemize}
+
+\item application with long-lasting client connections that need to be
+maintained
+
+\item custom applications with no other way of doing clustering
+
+\item to avoid complicated custom clustering solutions
+
+\end{itemize}
+
+Temporary on-demand fault tolerance could be used during critical time period.
