@@ -1,5 +1,8 @@
 \subsection{Configure vSS and vDS policies}
 
+Distributed virtual switches can allow individual ports to override the switch
+port policies.
+
 \subsubsection{Identify common vSS and vDS policies}
 
 \subsubsection{Configure dvPort group blocking policies}
@@ -95,10 +98,35 @@ physical switch ports are set to trunk, requires driver on virtual machine
 
 \end{itemize}
 
-To use PVLANS, the physical switch connected to the host needs to support them.
+A PVLAN is a way that a VLAN can be subdivided into multiple secondary PVLANS.\\
+
+To create a PVLAN a primary VLAN has multiple secondary PVLANS configured in
+it.\\
+
+Each packet is associated with an ID that the physical switch can use to
+identify the mode (promiscuous, isolated or community).\\
+
+To use PVLANS, the physical switch connected to the host needs to support them.\\
 
 In a PVLAN, the connection type of the primary VLAN is promiscuous so that
 ports on the PVLAN can communicate with ports configured as the primary VLAN.
+
+PVLAN Modes
+
+\begin{description}
+
+\item[promiscuous]
+can send and receive frames with any secondary PVLAN, typically routers are
+attached to promsicuous ports
+
+\item[isolated]
+may only send and receive frames from the promiscuous PVLAN
+
+\item[community]
+may send and receive frames with any secondary PVLAN and with the promiscuous
+PVLAN
+
+\end{description}
 
 \subsubsection{Configure traffic shaping policies}
 

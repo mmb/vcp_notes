@@ -1,5 +1,16 @@
 \subsection{Configure vNetwork Distributed Switches}
 
+The vSphere Distributed Switch creates a centralized virtual switch that
+multiple ESXi hosts can subscribe to. It reduces networking configuration and
+changes and allows you to centrally manage networking for VMs across multiple
+ESXi hosts.\\
+
+Distributed switch give you consistent network configuration and stats as
+VMs are migrated using vMotion.\\
+
+Distributed virtual port groups are similar to standard vSwitch port groups
+but are distributed across multiple ESXi hosts.\\
+
 The distributed switch was improved in vSphere 5.\\
 
 NetFlow settings are configured at the vSphere distributed switch level.\\
@@ -8,6 +19,13 @@ If you don't select ``Allow normal IO on destination ports'' mirrored traffic
 is allowed out but not in on destination ports.
 
 \subsubsection{Identify vNetwork Distributed Switch (vDS) capabilities}
+
+Distributed virtual switches have increased capabilities when compared to
+standard vSwitches such as security, traffic shaping, load balancing, VLAN
+settings, portblocking and VMs joining VLANs on physical networks.\\
+
+Distributed virtual switches can be 3rd-party products like the Cisco Nexus
+1000V.
 
 \subsubsection{Create/Delete a vNetwork Distributed Switch}
 
@@ -22,5 +40,8 @@ is allowed out but not in on destination ports.
 \subsubsection{Migrate virtual adapters to/from a vNetwork Standard Switch}
 
 \subsubsection{Migrate virtual adapters to/from a vNetwork Distributed Switch}
+
+VMs connected to standard virtual switches can be migrated to distributed
+virtual switches using vCenter.
 
 \subsubsection{Determine use case for a vNetwork Distributed Switch}
