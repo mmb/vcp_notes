@@ -1,11 +1,58 @@
 \subsection{Configure vNetwork Standard Switches}
 
+Virtual networking features of ESXi can be used to build an IP network that
+integrates seamlessly with the physical server environment.
+
 \subsubsection{Identify vNetwork Standard Switch (vSS) capabilities}
 
-The default number of logical ports for a standard switch is 120.\\
+vSSs are logical objects that reside in the vmkernel of an ESXi host. Each
+virtual NIC connected to a virtual switch will have its own MAC address.
+One or more physical NICs in the host are bound to the virtual switch to give
+VMs connectivity to the outside world.\\
 
-When the number of ports on an existing virtual switch is changed, the ESXi
-host must be rebooted.
+Virtual switches can contain one or more port groups.\\
+
+The default number of logical ports for a standard switch is 120. When the
+number of ports on an existing virtual switch is changed, the ESXi host must be
+rebooted.\\
+
+A virtual switch mimics a physical switch. vSSs operate at layer 2 and can
+provide vlan tagging, security, checksums, and segmentation offload units.\\
+
+Virtual switches are similar to physical switches:
+
+\begin{itemize}
+\item maintain MAC address tables
+\item look up each frame's destination MAC on arrival
+\item forward frames to one or more ports
+\item  avoid unncessary deliveries
+\end{itemize}
+
+Virtual switches are different from physical switches:
+
+\begin{itemize}
+\item cannot be connected to other virtual switches the way physical switches can
+\item do not require spanning tree protocol (STP)
+\item isolation prevents switching loops
+\item forwarding data table is unique to each virtual
+\end{itemize}
+
+Type of vSSs:
+
+\begin{description}
+
+\item[internal only]
+used for communication of two VMs on the same ESXi host
+
+\item[single adapter]
+a virtual switch bound to a single physical adapter for communication
+with the physical network
+
+\item[NIC team]
+bound to two or more physical adapters used to provide redundancy and bandwidth
+aggregation for communication with the physical network
+
+\end{description}
 
 \subsubsection{Create/Delete a vNetwork Standard Switch}
 
@@ -24,7 +71,9 @@ vmkernel ports can be used for:
 
 Each VMkernel port has an IP address configured for it or can use DHCP.\\
 
-You can enable vMotion and IP storage for only one port group per host.
+You can enable vMotion and IP storage for only one port group per host.\\
+
+The label used for the vMotion network must be the same on all ESXi hosts.
 
 \subsubsection{Add/Edit/Remove port groups on a vNetwork Standard Switch}
 

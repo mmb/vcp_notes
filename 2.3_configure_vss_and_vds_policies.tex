@@ -39,9 +39,43 @@ VLAN
 
 \end{itemize}
 
+Virtual switches can send notification to physical switches if the notify
+switches option is configured on them.\\
+
+The failback setting is what happens if a NIC fails and then becomes active
+again. If true the original failed NIC will begin to be used again.
+
+vSwitch security:
+
+\begin{description}
+
+\item[promiscuous mode]
+reject is the default, whether a VM is allowed to see all frames or only
+frames addressed to its MAC
+
+\item[MAC address change]
+accept is the default, for incoming traffic, denies incoming traffic to a VM
+when the mac address in the guest does not match the MAC in the VMX file
+
+\item[forged transmits]
+accept is the default, for outgoing traffic, deny outbound frames with a
+source MAC that is anything but the MAC currently set on the adapter
+
+\end{description}
+
 \subsubsection{Configure VLAN settings}
 
-802.1Q is the VLAN standard.\\
+A VLAN is a logical configuration of network switch ports to segment IP
+traffic (creating multiple networks on the same physical switch). Using VLANs
+reduces hardware needs by allowing a switch to segment IP traffic into
+mulitple subnets on a port-by-port basis. VLANs allows IP subnets to extend
+beyond the distance limitations of the physical medium.\\
+
+A trunk port is a port that has knowledge of all VLANs configured.\\
+
+802.1Q is the VLAN standard. Virtual switches in ESXi provide support for the
+802.1Q VLAN tagging standard to allow virtual machines to be seen as part of
+VLANs configured on physical switches.\\
 
 VLAN 4095 can see traffic from any VLAN.\\
 
