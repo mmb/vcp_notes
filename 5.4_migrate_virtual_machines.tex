@@ -36,6 +36,11 @@ the virtual machine cannot be vMotioned.
 \item CPU compatibility, or family compatibility if using EVC on the cluster
 \end{itemize}
 
+storage vMotion of a large VM can take a long time depending on the network
+connection.\\
+
+To move both host and datastore of a VM it must be powered off.
+
 \subsubsection{Identify Enhanced vMotion Compatibility CPU requirements}
 
 \subsubsection{Identify snapshot requirements for vMotion/Storage vMotion migration}
@@ -50,5 +55,16 @@ vSphere 5 supports Storage vMotion of virtual machines with snapshots.
 
 \subsubsection{Utilize Storage vMotion techniques (changing virtual disk type, renaming virtual machines, etc.)}
 
+Storage vMotion moves the storage of a running VM from one datastore to
+another. The VM stays on same host and the memory never moves.\\
+
+Use cases for storage vMotion:
+
+\begin{itemize}
+\item balance datastore utilization for space and performance
+\item perform SAN maintenance or swap out
+\end{itemize}
+
 You can use storage vMotion to transform virtual disks from one format to
-another (thin to thick, but not thick to thin).
+another (between thin and thick). FT is a use case for changing from thin to
+thick because it requires thick.
