@@ -1,0 +1,41 @@
+\section{Storage I/O Control}
+
+Most virtualization performance issues are caused by latency in shared
+storage. Storage I/O control provides quality of service to ensure that all
+VMs get the storage performance they need.\\
+
+Storage I/O control is necessary so that one VM doesn't slow down another's
+use of storage resources.\\
+
+Storage I/O control uses the concept of shares, similar to the way VMs
+and resource pools use shares for CPU and memory.\\
+
+Storage I/O Control is enabled is enabled per datastore. Once enabled, ESXi
+servers monitor the latency of that datastore.
+
+\subsection{Requirements}
+
+\begin{itemize}
+\item datastores must be managed by a single vCenter server
+\item FC, iSCSI and NFS are supported, RDM is not
+\item support for NFS is new in vsphere 5
+\item datastores with multiple extents are not supported
+\item vsphere 4.1 or later (5 to use nfs)
+\end{itemize}
+
+\subsection{Enabling SIOC}
+
+\begin{enumerate}
+\item go to ESXi server
+\item Configuration tab
+\item Storage
+\item select Datastore
+\item select Properties
+\end{enumerate}
+
+The number of shares and maximum IOPS can be set per VM. The number of shares
+defaults to normal (1000). To limit a VM based on Mb/s, you can convert into
+IOPS based on the typical I/O size for that VM.\\
+
+Shares are set per-disk on a VM and are all disks are added to get the VM's
+total IO shares.
