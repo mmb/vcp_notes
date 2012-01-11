@@ -18,6 +18,8 @@ DRS understands the resources of the virtual infrastructure:
 \item storage
 \end{itemize}
 
+There can be up to 32 ESXi hosts in a cluster.\\
+
 Host and cluster provide resource and VMs consume resources.\\
 
 Goals of DRS:
@@ -87,18 +89,34 @@ its parent or ancestor.
 \subsubsection{Create/Delete a DRS/HA Cluster}
 
 HA protects against server failure by restarting virtual machines on other
-hosts within the cluster. It also protects against application failure by
-monitoring a VM and resetting it if a failure occurs.\\
+hosts within the cluster. It also protects against guest OS and application
+failure by monitoring a VM and resetting it if a failure occurs.\\
 
-VMware Tools heartbeats can reboot a VM is the guest OS crashes.\\
+VM monitoring options:
+
+\begin{itemize}
+\item disabled
+\item VM monitoring only
+\item VM and application monitoring
+\end{itemize}
+
+If the host a critical server is on fails, it will be brought back up by HA
+in the time it takes to boot. HA reduces downtime.\\
+
+HA provides uniform protection for all guest operating systems and
+applications.
+
+When combined with DRS, HA can provide smart failover and select the best
+ESXi host.
 
 When a host is added to a vSphere cluster an agent is put on it to
 communicate with agents on other hosts. HA uses TCP and UDP port 8182 for
 agent to agent communication. It uses the vpxuser account. The agent can
 be added to auto deployed hosts using an image profile.\\
 
-A single host is elected as master by all hosts. The host that mounts the
-most datastores has an advantage in the election.\\
+A single host is elected as master by all hosts. The full name of the master
+host is the Fault Domain Manager Master (FDMS). The host that mounts the most
+datastores has an advantage in the election.\\
 
 The master:
 
@@ -134,14 +152,16 @@ There is a preferred set of datastores for heartbeating. The default number
 of heartbeat datastores is two.\\
 
 When a host sees no HA traffic it pings the cluster isolation address. If it
-cannot reach it, it declares itself isolated from the network.\\
+cannot reach it, it declares itself isolated from the network. Host isolation
+responses require that Host Monitoring Status is enabled.
 
 Host isolation response options:
 
 \begin{itemize}
-\item leave powered off (default)
+\item leave powered on (default)
 \item power off
 \item shutdown
+\item disabled
 \end{itemize}
 
 This option can be set on individual VMs.\\
@@ -154,8 +174,38 @@ all hosts.
 During a split brain scenario VMs might be running on multiple hosts at the
 same time.\\
 
-Hosts can be designated as failover hosts. Failover hosts will be used to
-restart VMs first. VMs cannot be powered on on or migrated to failover hosts.
+Requirements for HA:
+
+\begin{itemize}
+\item shared storage for VMs running in the HA cluster
+\item all hosts should have access to all VM networks
+\item can use DRS with HA or HA only
+\item all hosts must be licensed for HA
+\item must have created a cluster with HA enabled
+\item all hosts must have a static ip
+\item at least 2 hosts in the cluster
+\item at least one management network (best practice says two)
+\end{itemize}
+
+HA best practices:
+
+\begin{itemize}
+
+\item monitor cluster validity
+
+\item recommended to disable host monitoring when making changes to the
+network or distirbuted virtual switches
+
+\item all networks and VMs on HA clusters must have compatible networks
+
+\item by default the isolation IP is the default gateway but you can configure
+others by setting the dsa.isolationaddressX setting, where X can be a value 1
+- 10
+
+\item use network redundancy between ESXi servers
+
+\item always resource 25\% of capacity for HA
+\end{itemize}
 
 HA Changes for vSphere 5:
 
@@ -298,7 +348,12 @@ disallow the operation
 
 \end{enumerate}
 
-The percentage of cluster resources policy does not address fragmentation.
+The percentage of cluster resources policy does not address fragmentation.\\
+
+Failover hosts admission control:\\
+
+Hosts can be designated as failover hosts. Failover hosts will be used to
+restart VMs first. VMs cannot be powered on on or migrated to failover hosts.\\
 
 VM Restart Priority Options:
 
@@ -308,6 +363,9 @@ VM Restart Priority Options:
 \item medium (default)
 \item high
 \end{itemize}
+
+Agent virtual machines (vShield applicances, etc.) and FT secondary virtual
+machines will be restarted with priority than high-priority VMs.\\
 
 VM guest and application can be monitored by checking for heartbeats from
 VMware tools and for I/O. Application monitoring requires the appropriate SDK.
