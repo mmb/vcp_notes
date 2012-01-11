@@ -77,6 +77,11 @@ at the VM level that are used for SIOC and SDRS
 
 \end{description}
 
+Resource pools and vApps have an ``expandable reservation'' option. When
+enabled, if the combined reservations of the virtual machines are larger
+than the reservation of the resource pool or vApp, it can use resources from
+its parent or ancestor.
+
 \subsubsection{Describe DRS virtual machine entitlement}
 
 \subsubsection{Create/Delete a DRS/HA Cluster}
