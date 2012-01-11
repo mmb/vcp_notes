@@ -7,6 +7,10 @@ port policies.
 
 \subsubsection{Configure dvPort group blocking policies}
 
+Port blocking policies allow you to selectively block ports from sending or
+receiving data. They can be applied to distributed port groups, distributed
+virtual ports or uplink ports.
+
 \subsubsection{Configure load balancing and failover policies}
 
 To avoid losing connectivity during failover or failback, put your physical
@@ -111,27 +115,55 @@ To use PVLANS, the physical switch connected to the host needs to support them.\
 In a PVLAN, the connection type of the primary VLAN is promiscuous so that
 ports on the PVLAN can communicate with ports configured as the primary VLAN.
 
-PVLAN Modes
+PVLAN Types
 
 \begin{description}
 
 \item[promiscuous]
-can send and receive frames with any secondary PVLAN, typically routers are
-attached to promsicuous ports
+ports can communicate with all ports in the VLAN including isolated and
+community ports, typically routers are attached to promsicuous ports
 
 \item[isolated]
-may only send and receive frames from the promiscuous PVLAN
+ports are separated from all other ports in the same VLAN except the
+promiscuous ports, traffic to isolated ports is blocked unless it comes from
+promiscuous ports, traffic from isolated ports is forwarded only to
+promiscuous ports, can use just one of these per VLAN since they don't
+exchange traffic with each other, typically connected to a host
 
 \item[community]
-may send and receive frames with any secondary PVLAN and with the promiscuous
-PVLAN
+ports communicate among themselves in the same community PVLAN and with
+promiscuous ports in the VLAN, separated from all ports in other communities
+and isolated ports in their VLAN
 
 \end{description}
 
 \subsubsection{Configure traffic shaping policies}
 
 ESXi shapes outbound network traffic on standard switches and input and
-outbound traffic on distributed switches.
+outbound traffic on distributed switches.\\
+
+On distributed switches you can configure both ingress and egress traffic
+shaping.\\
+
+Traffic shaping parameters:
+
+\begin{description}
+
+\item[average bandwidth]
+average number of bits per second to allow across a port
+
+\item[peak bandwidth]
+maximum number of bits per second to allow across a port when it is using
+its burst bonus
+
+\item[burst size]
+maximum number of bytes to allow in a burst, when the port needs more
+bandwidth than the average bandwidth, it may be allowed to temporarily
+transmit data at a higher speed if a burst bonus is available
+
+\end{description}
+
+These can be applied to distributed virtual switch port groups or ports.
 
 \subsubsection{Enable TCP Segmentation Offload support for a virtual machine}
 

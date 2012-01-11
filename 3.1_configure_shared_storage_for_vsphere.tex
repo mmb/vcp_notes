@@ -300,6 +300,10 @@ connections using a CHAP name and secret. Mutual CHAP, where the initiator and
 target both authenticate each other is supported for software and dependent
 hardware iSCSI. In normal CHAP the target authenticates the host only.
 
+CHAP is only checked when connecting the host to the array. As long as the
+connection is active, access continues. If either endpoint ends the
+connection, reconnection will fail if CHAP has been disabled on the initiator.
+
 \subsubsection{Determine use case for hardware/dependent hardware/software iSCSI initiator}
 
 ESXi does not support multipathing when you combine an independent hardware

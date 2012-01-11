@@ -5,6 +5,78 @@ CPU families to use the common denominator of CPU features. When enabled on a
 cluster, only compatible hosts may be added to the cluster. Even with EVC,
 you cannot mix AMD and Intel in the same cluster.
 
+As the number and utilization of VMs grows it tends to grow disproportionately.
+DRS ensures that a VM gets the resources it needs. DRS does not try to
+achieve load balancing.
+
+DRS understands the resources of the virtual infrastructure:
+
+\begin{itemize}
+\item CPU
+\item memory
+\item power
+\item storage
+\end{itemize}
+
+Host and cluster provide resource and VMs consume resources.\\
+
+Goals of DRS:
+
+\begin{itemize}
+\item prevent one VM from monopolizing resources
+\item guarantee service levels
+\item efficiently use server hardware
+\item make VMware administrator's life easier
+\end{itemize}
+
+DRS is enabled at the cluster level.\\
+
+DRS automation levels:
+
+\begin{description}
+
+\item[manual]
+gives suggestions it that must be done manually
+
+\item[partially automated]
+VMs automatically placed on power-on, gives suggestions after that
+
+\item[fully automated]
+migration threshold is set and vCenter moves VMs automatically
+
+\end{description}
+
+Migration rules can be used to VMs together or apart.\\
+
+DR requirements:
+
+\begin{itemize}
+\item vSphere Enterprise or Enterprise Plus licenses
+\item shared storage between hosts and all VMs must be on shared storage
+\item DRS will use vMotion so it vMotion needs to work between hosts
+\item beware of CPU compatibility issues, consider EVC
+\end{itemize}
+
+DPM (distributed power management) will consolidate VMs onto fewer hosts when
+the load is low and power off unused hosts. DPM requires DRS.
+
+Different way to control resources:
+
+\begin{description}
+
+\item[reservation]
+reserve a certain amount of CPU or memory
+
+\item[limit]
+set an upper bound for resources
+
+\item[shares]
+gives priority shares of CPU or memory resources, set high, normal or low
+with 4:2:1 ratio or use a custom ratio, you can also set shares for IOPS
+at the VM level that are used for SIOC and SDRS
+
+\end{description}
+
 \subsubsection{Describe DRS virtual machine entitlement}
 
 \subsubsection{Create/Delete a DRS/HA Cluster}
@@ -135,7 +207,7 @@ Storage DRS affinity rules can be based on:
 
 \subsubsection{Monitor a DRS/HA Cluster}
 
-\subsubsection{Configure migration thresholda for DRS and virtual machines}
+\subsubsection{Configure migration thresholds for DRS and virtual machines}
 
 \subsubsection{Configure automation levels for DRS and virtual machines}
 
