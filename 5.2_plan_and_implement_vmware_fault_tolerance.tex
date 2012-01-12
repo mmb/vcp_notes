@@ -29,19 +29,27 @@ FT works even if vCenter is unavailable.
 Cluster Requirements
 
 \begin{itemize}
+
 \item HA-enabled cluster
+
 \item host certificate checking must be enabled
+
 \item at least two FT-certified hosts running the same FT version
+
 \item hosts must have access to the same datastores and networks
-\item FT logging and vMotion networks must be configured
+
+\item FT logging and vMotion networks must be configured (3 1GB nics minumum
+are recommended)
+
 \end{itemize}
 
 Host Requirements
 
 \begin{itemize}
-\item FT-compatible processors.
-\item licensed and certified for FT
+\item FT-compatible processors
+\item licensed and certified for FT (vSphere Enterprise or Enterprise Plus)
 \item hardware virtualization enabled in the BIOS
+\item ESXi servers must be running same build
 \end{itemize}
 
 Virtual Machine Requirements
@@ -52,7 +60,7 @@ Virtual Machine Requirements
 \item incompatible features must not be running
 \item must be on shared storage
 \item must only have 1 vCPU
-\item guest OS must be supported
+\item guest OS must be supported, some require shutdown to enable
 \end{itemize}
 
 vSphere features not supported with FT:
@@ -86,8 +94,12 @@ VM features not supported with FT:
 To change the network a NIC on an FT VM is plugged into, FT must be disabled
 first.\\
 
-When FT is turned on, the VMs memory limit is set to its memory size.
-Memory reservation, size, limit and shared cannot be changed while FT is on.
+When FT is turned on, the VM's memory reservation is set to its memory size
+and its memory limit is unset. Memory reservation, size, limit and shared
+cannot be changed while FT is on.\\
+
+VMware Site Survey is a free vSphere plugin that can determine if FT can be
+used on a cluster.
 
 \subsubsection{Configure VMware Fault Tolerance networking}
 
