@@ -1,0 +1,56 @@
+\subsection{Create and Deploy vApps}
+
+A vApp is a container, like a resource pool and contains one or more virtual
+machines. A vApp can be powered on and off, suspended and cloned.\\
+
+When powering on a vApp in a DRS cluster in manual mode, DRS performs as if
+the cluster is in automatic mode  and does not generate recommendations for
+the initial placement of VMs in the vApp.
+
+\subsubsection{Identify vApp settings}
+
+\begin{itemize}
+\item shares, reservations and limits (like resource pools)
+\item startup and shutdown order
+\item startup delays and startup actions
+\item vService dependencies
+\item OVF environment properties
+\item HTTP proxy server
+\end{itemize}
+
+\subsubsection{Create/Clone/Export a vApp}
+
+The distribution format for vApp is OVF.\\
+
+VMware Studio can be used to create vApps.\\
+
+A vApp can contain VMs, resource pools or other vApps.
+
+\subsubsection{Add objects to an existing vApp}
+
+Objects can be dragged into the vApp.
+
+\subsubsection{Edit vApp settings}
+
+\subsubsection{Configure IP pools}
+
+vApps have an IP allocation policy that can be:
+
+\begin{description}
+
+\item[fixed]
+IP addresses are configured manually
+
+\item[transient]
+IP addresses are automatically allocated from configured IP pools
+
+\item[DHCP]
+a DHCP server is used to allocate IP addresses
+
+\end{description}
+
+An IP pool is host range within the network.
+
+\subsubsection{Suspend/Resume a vApp}
+
+\subsubsection{Determine when a tiered application should be deployed as a vApp}
