@@ -234,12 +234,19 @@ IP address, username and password.
 \subsubsection{Configure Storage DRS}
 
 Storage DRS load balances VMs based on datastores. It can be used to profile
-storage and attach SLAs to VMs.\\
+storage and attach SLAs to VMs. Storage DRS requires a vSphere Enterprise
+Plus license.\\
+
+Without storage DRS, when you create a VM you have to manually find a
+datastore with enough space and low enough latency. From there, you hope for
+the best, periodically checking latency and trying to monitor for low space.
+This is inefficent, costs all parties invovled time and money and provides
+as opportunity for outages and slowdowns.\\
 
 Storage DRS is enabled with Storage vMotion.\\
 
 Storage DRS can determine initial VM placement and perform automated load
-balancing base on:
+balancing based on:
 
 \begin{itemize}
 
@@ -248,15 +255,55 @@ balancing base on:
 
 \end{itemize}
 
+Initial placement is calculated when the VM is created, when the VM is cloned
+or when the VM is relocated.\\
+
+VMs are automatically balanced by being storage vMotioned to a better
+datastore if they arent receiving the latency they need.\\
+
+Per-VM settings can override the SDRS automation level set on the datastore
+cluster.\\
+
 Storage DRS affinity rules can be based on:
 
-\begin{itemize}
+\begin{description}
 
-\item VMDK affinity
-\item VMDK anti-affinity
-\item VM anti-affinity (don't move my config files, but move my VMDKs)
+\item[VMDK affinity]
+keep a VM's VMDKs on the same datastore, maximizes the availability when all
+VMDKs are needed to run, on by default for all VMs
 
-\end{itemize}
+\item[VMDK anti-affinity]
+keep a VM's VMDKs on different datastores, useful for separating log and data
+disks of database VMs, can select all or a subset of a the VM's disks
+
+\item[VM anti-affinity]
+keep VMs on different datastores, similar to DRS anti-affinity rules, maximize
+availbility of redundant VMs
+
+\end{description}
+
+Datastore clusters are cluster of datastores like DRS clusters are clusters
+of hosts. When SDRS is not turned on a datastore cluster acts as a folder of
+datastores.\\
+
+When a datastore is put into maintenance mode all registered VMDKs on it are
+evacuated. Templates, ISOs and unregistered VMs remain.\\
+
+Space utilization is continuously collected and the default threshold for
+action is 80\% full.\\
+
+I/O latency is evaluated every 8 hours based on the last 24-hour trend. The
+default threshold for action is 15ms.\\
+
+Storage DRS does a cost/benefit analysis to determine if moving a VM to a
+different datastore is worth it.\\
+
+SDRS works with SIOC and takes into account which VMs have higher I/O shares.\\
+
+It takes 16 hours of I/O stats before SDRS will make its first recommendation.\\
+
+Schedule tasks can modify SDRS settings (such as disabling it during a backup
+period).
 
 \subsubsection{Configure Enhanced vMotion Compatibility}
 
