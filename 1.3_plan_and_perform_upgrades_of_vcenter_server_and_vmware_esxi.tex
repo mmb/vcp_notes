@@ -1,0 +1,86 @@
+\subsection{Plan and Perform Upgrades of vCenter Server and VMware ESXi}
+
+Before doing an upgrade from vSphere 4 to 5, verify that your licenses will
+upgrade to the level of vSphere that you need. Pay special attention to vRAM.
+Do adequate planning and review the upgrade guide to identify which upgrade
+scenario fits.\\
+
+Upgrading to vCenter 5:
+
+\begin{itemize}
+
+\item requires vCenter downtime
+
+\item no production downtime (no VM downtime)
+
+\item database schema will be upgraded
+
+\item upgrade to new vCenter Server
+
+\item backup databasse
+
+\item check ODBC credentials
+
+\item uninstall Update Manager and Converter extensions (for each, uninstall
+both server side and client side)
+
+\item check vSphere compatibility matrices
+
+\end{itemize}
+
+Upgrading VMware Update Manager:
+
+\begin{itemize}
+\item backup database
+\item check ODBC credentials
+\item uninstall Update Manager client extensions
+\end{itemize}
+
+\subsubsection{Identify upgrade requirements for ESXi hosts}
+
+Host hardware must be compatible with vSphere 5.
+
+\subsubsection{Identify steps required to upgrade a vSphere implementation}
+
+\begin{enumerate}
+\item run vCenter host agent pre-upgrade checker
+\item upgrade vCenter server
+\item upgrade vPphere client
+\item upgrade licensing
+\item upgrade Update Manager
+\item upgrade ESX/ESXi hosts
+\item upgrade VMware tools and VM hardware
+\item upgrade datastore to VMF5
+\end{enumerate}
+
+\subsubsection{Upgrade a vNetwork Distributed Switch}
+
+\subsubsection{Upgrade from VMFS3 to VMFS5}
+
+\subsubsection{Upgrade VMware Tools}
+
+Updating VMware tools can be automated with VMware Update Manager or done
+manually.
+
+\subsubsection{Upgrade Virtual Machine hardware}
+
+Upgrading virtual machine hardware requires VM downtime. In vSphere 5 VMs
+can be updated to virtual hardware version 8. The process can be automated
+using Update Manager or done manually.
+
+\subsubsection{Upgrade an ESXi Host using vCenter Update Manager}
+
+\begin{itemize}
+\item requires host downtime
+\item host must be in maintenance mode
+\item use the host upgrade utility GUI
+\item takes 15 - 25 minutes
+\end{itemize}
+
+If upgrading an ESX host that has a local VMFS datastore, you will be asked
+if you want to preserve or overwrite it.\\
+
+if your ESX host has custom VIBs, migration could cause problems and you may
+need to build a new VIB using Image Builder.
+
+\subsubsection{Determine whether an in-place upgrade is appropriate in a given upgrade scenario}
