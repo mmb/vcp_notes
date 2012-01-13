@@ -1,0 +1,57 @@
+\section{vSphere Command Line interface Options}
+
+Reasons for using CLI:
+
+\begin{itemize}
+\item faster once you overcome the learning curve
+\item automation
+\item integration with other products
+\end{itemize}
+
+\subsection{ESXi Tech Support Mode}
+
+ESXi Tech Support Mode is a CLI in ESXi accessible on the console or over ssh
+(Remote Tech Support Mode).\\
+
+Tech Support Mode or Remote Tech Support Mode can be enabled on the ESXi
+server console using the DCUI or using the vSphere client.
+
+Alt-F1 opens the ESXi console. Alt-F2 returns to the DCUI.
+
+\subsection{PowerCLI and Project Onyx}
+
+PowerCLI is a PowerShell-based CLI that runs on Windows. Quest PowerGUI is
+GUI front-end for PowerCLI that provides pre-created scripts.\\
+
+Project Onyx acts as a proxy between the vSphere Client and vCenter Server
+and can intercept vSphere Client commands and show them as SOAP or PowerCLI
+commands.
+
+\subsection{vSphere CLI}
+
+VCLI is a Windows Application that allows esxcfg and esxcli commands to be
+run in the Windows command prompt.
+
+\subsection{vSphere Management Assistant}
+
+vSphere Management Assistant is a Linux-based virtual appliance that has
+the CLI installed in it. It has the esxcfg and esxcli commands and fastpass
+authentication that allows you to authenticate once and perform multiple
+commands.\\
+
+The login is vi-admin.
+
+\subsection{ESXi Tech Support Mode Commands}
+
+Traditional ESXi configuration commands run from Tech Support Mode start with
+with \texttt{esxcfg-}. These commands have been deprecated and you should
+use the \texttt{esxcli} command instead. \texttt{esxcli} is new in vSphere
+v5.\\
+
+Example ESXi console commands:
+
+\begin{verbatim}
+esxcfg-nics
+esxcli vm list
+esxcli network ip interface list
+\end{verbatim}
