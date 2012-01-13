@@ -18,7 +18,7 @@ ESXi maximums:
 \item 160 logical CPUs per physical machine
 \item 2TB of physical RAM
 \item 512 VMs per host
-\item 2048 vCpus per host
+\item 2048 vCPUs per host
 
 \end{itemize}
 
@@ -48,16 +48,114 @@ Auto Deploy and Image Builder:
 \begin{itemize}
 \item centrally manage stateless hardware
 \item host configuration provided by answer file and/or host profiles
-\item can deploy image based on subnet (put different types of hosts on
-different subnets)
-\item image builder streamlines creation of customized installation media
+\item can deploy image based on subnet (install different images on different
+subnets) and other criteria
+\item Image Builder streamlines creation of customized installation media
+\end{itemize}
+
+Auto Deploy components:
+
+\begin{itemize}
+
+\item auto deploy server
+
+\item rules to determine which image and host profile hosts will get, the
+active rule set is ready to be deployed, the working rule set is for testing
+rules before they go into production
+
+\item image profile, an ISO that lets you install ESXi, vendors can provide the
+images for their hardware, there are default image profiles and custom image
+profiles
+
 \end{itemize}
 
 The answer file contains user-input policies for the host profile. It is
-created when the profile is initially applied to a particular host.\\
+created when the profile is initially applied to a particular host. Any type
+of user interaction during the boot process is capured in the answer file.
+if any questions come up during ESXi boots that don't have answers, the host
+will go into maintenance mode until they are answered.\\
 
-It is recommended to set the remove syslog server for auto deployed hosts
-in a host profile.\\
+Auto deploy boot process:
+
+\begin{itemize}
+
+\item the host PXE boots and gets an IP from DHCP
+
+\item DHCP points the host to the TFTP server using DHCP option 66
+
+\item the host contacts the TFTP server and downloads a gPXE configuration file
+from DHCP option 67
+
+\item the gPXE config file instructs the host to make an HTTP boot request to
+the auto deploy server
+
+\item the auto deploy server queries the rules engine for information about
+the host
+
+\item an image profile and a host profile are attached to the host based
+on a rule set
+
+\item ESXi is installed into the host RAM, is added to vCenter and is
+configured
+
+\item vCenter maintains the image profile and host profile for each host in
+its database
+
+\end{itemize}
+
+Auto deploy requirements:
+
+\begin{itemize}
+\item DHCP server, option 66 is the hosname or IP of the TFTP server, option
+67 is \texttt{undionly.kxpe.vmw-hardwired}
+\item possible router configuration
+\item PXE
+\item TFTP server
+\end{itemize}
+
+Auto deploy installation and configuration tasks:
+
+\begin{itemize}
+\item install and configure auto deploy
+\item install the TFTP server
+\item configure DHCP
+\item configure DNS
+\item install and configure the Dump Collector
+\item install and configure the syslog server
+\end{itemize}
+
+Auto deploy setup requirements:
+
+\begin{itemize}
+\item vCenter 5 setup files
+\item VMware PowerCLI
+\item Windows Server 2008 DHCP and DNS
+\item ESXi 5 offline bundle
+\item a host capable of running esxi5
+\end{itemize}
+
+PowerCLI is required to set up auto-deploy. It can't be done in vCenter.\\
+
+ESXi offline bundle is imported into auto deploy repository using PowerCLI.
+
+\begin{verbatim}
+Add-EsxSoftwareDepot
+Get-EsxImageProfile
+New-DeployRule -Name foo -Item vib, "Test" -Pattern "mac=11:22:33:44:55:66"  
+\end{verbatim}
+
+Add rule to active set rules:
+
+\begin{verbatim}
+Add-DeployRule -DeployRule Test
+Copy-DeployRule -DeployRule Test -ReplaceItem Production
+Get-VMHost -Name esxi.test.com
+$tr = Test-DeployRuleSetCompliance esxi.test.com
+Repair-DeployRuleSetCompliance $tr
+\end{verbatim}
+
+On auto-deployed hosts, the syslog server and dump collector can be set up
+using host profiles.\\
 
 Logs viewable in ESXi DCUI:
 
