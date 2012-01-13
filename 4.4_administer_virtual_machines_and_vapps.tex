@@ -42,11 +42,32 @@ drives and USB devices.
 \subsubsection{Assign a Storage Policy to a virtual machine}
 
 Profile driven storage can be used to match storage capabilities to VM storage
-requirements to meet SLAs. It leverages VASA (storage APIs for array
-awareness).\\
+requirements to meet SLAs. It saves the time of vSphere and storage
+administrators by automating the discovery of storage capabilities and
+placement of VMs on the desired type of storage.\\
 
-Datastores can be manually tagged if the storage vendor has not implemented
-the APIs.\\
+Profile driven storage uses VASA (vSphere storage APIs - storage awareness)
+for discovery of storage capabilites such as capacity, performance,
+availability, and redundancy. If storage vendors to not support VASA yet
+capabilities can be defined manually.\\
+
+Profile driven storage workflow:
+
+\begin{enumerate}
+
+\item associate storage capabilites with datastores
+
+\item create storage profiles (gold, silver, etc.)
+
+\item associate a VM with a profile
+
+\item vSphere can automatically place the VM on a datastore that meets its
+needs and report if the VM is on non-compliant storage
+
+\end{enumerate}
+
+To use storage profiles, it must be enabled on a DRS cluster and must
+have the correct license.\\
 
 See VM Storage Profile in the vSphere client.
 
