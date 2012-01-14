@@ -1,0 +1,28 @@
+\section{NUMA}
+
+NUMA (non-uniform memory access) systems are advanced server platforms with
+more than one system bus. They can use a lot of processors in a single system
+with a good price to performance ratio.\\
+
+NUMA was developed to solve the problem of the high memory bandwidth
+requirements of high-speed SMP processors. NUMA system have several nodes each
+containing its own processors and memory. Each node can use the memory of
+other nodes over a NUMA connection (with higher latency than using its own
+memory).\\
+
+ESXi has a NUMA scheduler that assigns a home NUMA node to each virtual
+machine and prefers to give the VM memory in its home node. The virtual CPUs
+of the VM are only allowed to run on the home node's processors. The NUMA
+scheduler can change a virtual machine's home node to respond to changes
+in system load.\\
+
+ESXi 5.0 can expose virtual NUMA topology to guest operating systems.\\
+
+Transparent page sharing is optimize for NUMA.\\
+
+Virtual NUMA is enabled by default on VMs with more than 8 vCPUs. If
+the VM's cores per socket is greater than one and the number of virtual cores
+is greater than 8 the virtual NUMA node size matches the virtual socket size.
+If not, virtual NUMA nodes are create to match the topology of the first
+physical host where the VM is powered on.
+
