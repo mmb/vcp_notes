@@ -1,0 +1,91 @@
+\subsection{Backup and Restore Virtual Machines}
+
+\subsection{Identify snapshot requirements}
+
+\subsection{Create / Delete / Consolidate virtual machine snapshots}
+
+\subsection{Install and Configure VMware Data Recovery}
+
+VMware Data Recovery is a VMware virtualization backup and recovery application
+for VMware vSphere 4 and 5. It is deployed as a virtual appliance and
+administered from vSphere.\\
+
+VMware Data Recovery uses the vSphere API for Data Protection (VADP)
+framework.\\
+
+Features:
+
+\begin{itemize}
+
+\item provides backup and restore of guest virtual machines (VMs can be
+powered on or off)
+
+\item deduplication
+
+\item file level restore
+
+\item incremental and differential backup
+
+\item supports VSS for Windows
+
+\item snapshots for anytime backup
+
+\item requires no agent on the guest, works with any OS
+
+\item dedup and compression are automatic
+
+\item complete management of backup and recovery through the vSphere client
+
+\end{itemize}
+
+Installation:
+
+\begin{enumerate}
+\item download from vSphere download page
+\item deploy OVF
+\item virtual appliance web GUI
+\item install vCenter server plugin
+\end{enumerate}
+
+A 60-day evaluation is available if you are not using Essentials Plus,
+Standard, Enterprise, Enterprise Plus or have purchased a license a la carte.\\
+
+Limitations:
+
+\begin{itemize}
+
+\item backup datastore recommended to be no more than 1TB of dedup data and
+2 destinations total (500M if CIFS)
+
+\item 8 concurrent VMDK backups
+
+\item maximum of 100 VMs can be backed up per vdr appliance
+
+\item maximum of 10 VDR appliances per vCenter server (1000 vms per datacenter)
+
+\item does not provide a method to get backup data onto tape or offsite
+
+\end{itemize}
+
+New in Vsphere 5:
+
+\begin{enumerate}
+
+\item uses CentOS 5.5 64-bit
+
+\item swap files are no longer included in backups
+
+\item integrity checks and reclaim operations can be scheduled, resumed and
+run in the background
+
+\item backup peformance improved
+
+\item email reporting
+
+\end{enumerate}
+
+\subsection{Create a backup job with VMware Data Recovery}
+
+\subsection{Perform a test and live full/file-level restore with VMware Data Recovery}
+
+\subsection{Determine appropriate backup solution for a given vSphere implementation}
