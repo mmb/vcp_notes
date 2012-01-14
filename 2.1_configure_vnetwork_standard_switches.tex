@@ -1,7 +1,9 @@
 \subsection{Configure vNetwork Standard Switches}
 
 Virtual networking features of ESXi can be used to build an IP network that
-integrates seamlessly with the physical server environment.
+integrates seamlessly with the physical server environment.\\
+
+An ESXi server can have a maximum of 248 standard switches and 4096 ports.
 
 \subsubsection{Identify vNetwork Standard Switch (vSS) capabilities}
 
@@ -12,12 +14,15 @@ VMs connectivity to the outside world.\\
 
 Virtual switches can contain one or more port groups.\\
 
-The default number of logical ports for a standard switch is 120. When the
-number of ports on an existing virtual switch is changed, the ESXi host must be
-rebooted.\\
+The default number of logical ports for a standard switch is 120. The maximum
+number of ports is 4088. When the number of ports on an existing virtual switch
+is changed, the ESXi host must be rebooted.\\
 
 A virtual switch mimics a physical switch. vSSs operate at layer 2 and can
 provide vlan tagging, security, checksums, and segmentation offload units.\\
+
+Virtual switches do not support dynamic trunking protocol (discovering VLANs
+by watching traffic).\\
 
 Virtual switches are similar to physical switches:
 
@@ -64,7 +69,7 @@ vmkernel ports can be used for:
 
 \begin{itemize}
 \item Fault Tolerance logging
-\item IP storage (iSCSI, NFS)
+\item IP storage (software intiated iSCSI, NFS)
 \item management
 \item vMotion
 \end{itemize}
