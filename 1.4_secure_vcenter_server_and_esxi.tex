@@ -68,7 +68,29 @@ Windows).\\
 
 \subsubsection{Configure and administer the ESXi firewall}
 
-Select the host, Configuration tab, Security Profile.
+ESXi firewall is a service oriented stateless firewall used to protect
+the management interface of ESXi. It can be configured using vSphere client
+or esxcli.\\
+
+It contains rule set configuration where rules are defines (which ports to
+open) and service configuration where services are defined.\\
+
+Service behavior options:
+
+\begin{itemize}
+
+\item start automatically if any ports are open and stop when all ports are
+closed
+
+\item start and stop with host
+
+\item start and stop manually
+
+\end{itemize}
+
+Rule sets are stored in /etc/vmware/firewall.\\
+
+Select the host, Configuration tab, Security Profile, Properties.
 
 \subsubsection{Enable/Configure/Disable services in the ESXi firewall}
 
