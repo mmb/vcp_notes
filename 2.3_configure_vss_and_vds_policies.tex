@@ -98,7 +98,8 @@ before leaving the host, host adapters are connected to trunk ports on
 physical switch, port groups have VLAN set
 
 \item Virtual Guest Tagging (VGT), VLAN tagging performed by virtual machine,
-physical switch ports are set to trunk, requires driver on virtual machine
+physical switch ports are set to trunk and VLAN is set to 4095, requires
+driver on virtual machine
 
 \end{itemize}
 
@@ -139,7 +140,7 @@ and isolated ports in their VLAN
 
 \subsubsection{Configure traffic shaping policies}
 
-ESXi shapes outbound network traffic on standard switches and input and
+ESXi shapes outbound network traffic on standard switches and inbound and
 outbound traffic on distributed switches.\\
 
 On distributed switches you can configure both ingress and egress traffic
