@@ -1,0 +1,59 @@
+\section{vSphere 5 vRAM Pooled Pricing}
+
+vSphere 5 vRAM pooled pricing is a significant change. It may affect how
+virtual machines are provisioned and cost.\\
+
+vSphere is sold per CPU socket on the ESXi hosts. Each vSphere edition comes
+with a vRAM entitlement per socket that is pooled per version of vCenter.\\
+
+If the sum of configured vRAM of all powered on VMs is less than the sum of
+all socket vRAM entitlement you are in compliance. Configured vRAM is
+calculated as a 12-month average.\\
+
+vSphere Desktop Edition is sold per VDI user desktop so the the pooled
+vRAM limits do not apply to it.
+
+\subsection{vRAM Entitlements}
+
+\begin{description}
+\item[Hypervisor Free] 32GB per server
+\item[Essentials and Essentials Plus] 32GB per socket
+\item[Standard] 32GB per soocket
+\item[Enterprise] 64GB per socket
+\item[Enterprise Plus] 96GB per socket
+\end{description}
+
+If the vRAM pool is exceeded:
+
+\begin{itemize}
+
+\item there is a soft limit on virtual machines (when using Standard licenses)
+
+\item the EULA is violated and a warning is generated (with Standard,
+Enterprise or Enterprise Plus licenses)
+
+\item the EULA is violated and VMs will not power on (with Essentials and
+Essentials Plus licenses)
+
+\end{itemize}
+
+\subsection{Ways to Prevent Non-compliance}
+
+\begin{itemize}
+
+\item don't overprovision memory
+
+\item power off unused VMs
+
+\item reduce application memory use
+
+\item all hosts count toward the pool including HA hosts that are in standby
+mode and remote servers if you are using linked vCenter
+
+\end{itemize}
+
+\subsection{Reporting}
+
+vRAM pooled pricing reports can be viewed in vSphere client if the vSphere
+web client server is installed. The vSphere 5 license validator script and
+vSphere license advisor tools can also be used.
