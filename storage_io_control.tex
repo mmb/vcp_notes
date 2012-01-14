@@ -11,7 +11,12 @@ Storage I/O control uses the concept of shares, similar to the way VMs
 and resource pools use shares for CPU and memory.\\
 
 Storage I/O Control is enabled is enabled per datastore. Once enabled, ESXi
-servers monitor the latency of that datastore.
+servers monitor the latency of that datastore. It is enabled by default on
+Storage DRS-enabled datastore clusters.\\
+
+The congestion threshold is the latency limit that signals congestion and
+causes shares to be used. All datastores that share the same spindles should
+have the same congestion threshold.
 
 \subsection{Requirements}
 
@@ -20,7 +25,7 @@ servers monitor the latency of that datastore.
 \item FC, iSCSI and NFS are supported, RDM is not
 \item support for NFS is new in vsphere 5
 \item datastores with multiple extents are not supported
-\item vsphere 4.1 or later (5 to use nfs)
+\item vsphere 4.1 or later (5 to use NFS)
 \end{itemize}
 
 \subsection{Enabling SIOC}
@@ -35,7 +40,8 @@ servers monitor the latency of that datastore.
 
 The number of shares and maximum IOPS can be set per VM. The number of shares
 defaults to normal (1000). To limit a VM based on Mb/s, you can convert into
-IOPS based on the typical I/O size for that VM.\\
+IOPS based on the typical I/O size for that VM. You must set a limit on all
+the disks of a virtual machine to use limits.\\
 
 Shares are set per-disk on a VM and are all disks are added to get the VM's
 total IO shares.
