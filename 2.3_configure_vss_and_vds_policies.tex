@@ -19,11 +19,19 @@ switch in portfast or portfast trunk mode.\\
 Load balancing can be based on:
 
 \begin{itemize}
+
 \item port id of virtual port the traffic entered switch on
-\item hash of source and destination IP addresses
+
+\item hash of source and destination IP addresses, requires 802.3ad link
+aggregation or EtherChannel support on the physical switch
+
+
 \item hash of source MAC
+
 \item physical NIC load
+
 \item explicit order, use highest order uplink from list
+
 \end{itemize}
 
 IP-based teaming requires that the physical switch be configured with
@@ -50,7 +58,7 @@ Virtual switches can send notification to physical switches if the notify
 switches option is configured on them.\\
 
 The failback setting is what happens if a NIC fails and then becomes active
-again. If true the original failed NIC will begin to be used again.
+again. If true the original failed NIC will begin to be used again.\\
 
 vSwitch security:
 
@@ -151,16 +159,15 @@ Traffic shaping parameters:
 \begin{description}
 
 \item[average bandwidth]
-average number of bits per second to allow across a port
+average number of Kbps to allow across a port
 
 \item[peak bandwidth]
-maximum number of bits per second to allow across a port when it is using
-its burst bonus
+maximum number of Kbps to allow across a port when it is using its burst bonus
 
 \item[burst size]
-maximum number of bytes to allow in a burst, when the port needs more
-bandwidth than the average bandwidth, it may be allowed to temporarily
-transmit data at a higher speed if a burst bonus is available
+maximum number of KB to allow in a burst, when the port needs more bandwidth
+than the average bandwidth, it may be allowed to temporarily transmit data at
+a higher speed if a burst bonus is available
 
 \end{description}
 
