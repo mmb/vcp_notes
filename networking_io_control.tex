@@ -1,0 +1,27 @@
+\section{Network I/O Control}
+
+Network I/O control provides quality of service for network traffic by type.
+It requires vSphere Enterprise Plus licensing and must be enabled on a
+virtual distributed switch.\\
+
+Network I/O control was a new feature in vSphere 4.1.\\
+
+Network I/O control uses shares similar to the CPU and memory shares used
+by VMs and resource pools. It ensures the best performance for critical
+vSphere infrastructure such as NFS, iSCSI, FT and vMotion when there is
+high network load.
+
+\subsection{New in vSphere 5}
+
+\begin{itemize}
+\item user-defined network resource pools
+\item multi-tenant deployment
+\item bridges virtual and physical QOS with per resource pool 802.1p tagging
+\end{itemize}
+
+\subsection{vSphere Client}
+
+In the vSphere client, network resource pools are associated with the virtual
+distributed switch. User-defined network resource pools can be created,
+have shares set on them and then be associated with distributed virtual
+portgroups.
