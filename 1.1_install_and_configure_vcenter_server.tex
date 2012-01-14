@@ -229,15 +229,21 @@ Server Setting from the Home Screen.
 Port Requirements
 
 \begin{itemize}
+\item 22 SSH
 \item 80/443 for Web access
-\item 902 for heartbeat, ESXi management and VM console
-\item 8080 / 8443 for web services and HTTPS web services
+\item 123 NTP
 \item 389 for LDAP, can be changed
 \item 636 for vCenter Linked Mode, can be changed
-\item 60099 web service change service notification
+\item 902 for heartbeat, ESXi management and VM console, vCenter to vpxa on host
+\item 903 vSphere Client to VM console, vCenter to vpxa on host
+\item 2025 - 2250, 8042 - 8045 High Availability
+\item 3260 iSCSI
+\item 8000 vMotion
+\item 8080 / 8443 for web services and HTTPS web services
 \item 10443 vCenter Inventory Service HTTPS
 \item 10109 vCenter Inventory Serice Management
 \item 10111 vCenter Inventory Service Linked Mode Communications
+\item 60099 web service change service notification
 \end{itemize}
 
 When using a database on another server you must set up the 64-bit DSN for that database so you
