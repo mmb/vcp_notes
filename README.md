@@ -21,3 +21,5 @@ Relevant VMware documentation:
 * [vSphere Storage Guide](http://pubs.vmware.com/vsphere-50/topic/com.vmware.ICbase/PDF/vsphere-esxi-vcenter-server-50-storage-guide.pdf)
 
 * [vSphere Virtual Machine Administration Guide](http://pubs.vmware.com/vsphere-50/topic/com.vmware.ICbase/PDF/vsphere-esxi-vcenter-server-50-virtual-machine-admin-guide.pdf)
+
+* [vSphere 5.0 Upgrade Guide](http://pubs.vmware.com/vsphere-50/topic/com.vmware.ICbase/PDF/vsphere-esxi-vcenter-server-50-upgrade-guide.pdf)
