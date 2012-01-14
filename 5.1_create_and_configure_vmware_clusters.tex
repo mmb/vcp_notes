@@ -54,7 +54,7 @@ or disabled.\\
 
 Migration rules can be used to VMs together or apart.\\
 
-DR requirements:
+DRS requirements:
 
 \begin{itemize}
 \item vSphere Enterprise or Enterprise Plus licenses
@@ -63,10 +63,55 @@ DR requirements:
 \item beware of CPU compatibility issues, consider EVC
 \end{itemize}
 
-DPM (distributed power management) will consolidate VMs onto fewer hosts when
-the load is low and power off unused hosts. DPM requires DRS.
+Cluster Validity\\
 
-Different way to control resources:
+Reasonse a DRS cluster might become overcommitted or invalid:
+
+\begin{itemize}
+
+\item host failure
+
+\item the reservation on a parent resource pools is reduced while a virtual
+machine is failing over
+
+\item change are made to hosts or virtual machines using a vSphere client
+connected directly to a host while vCenter Server is unavailable
+
+\end{itemize}
+
+Unreserved resources means reservation minus reservation used for nonexpandable
+resource pools and reservation minus reservation used plus unreserved
+resources that can be borrowed from an ancestor for expandable resource
+pools.\\
+
+DPM (distributed power management) will consolidate VMs onto fewer hosts when
+the load is low and power off unused hosts. DPM requires DRS.\\
+
+DPM can use one of three power management protocols to bring a host out of
+standby mode: Intelligent Platform Management Interface (IPMI), HP Integrated
+Lights-Out (iLO), and Wake-on-LAN (WOL). Hosts must support one of these
+protocols to be used with DPM and they are tried in that order.\\
+
+BMC (Baseboard Management Controller) is used with IPMI and iLO.\\
+
+DPM automation levels:
+
+\begin{description}
+
+\item[off]
+DPM disabled and no recommendations will be made
+
+\item[manual]
+recommendations are made but must be manually executed
+
+\item[automatic]
+host power recommendations are execute automatically
+
+\end{description}
+
+Hosts can override the cluster automation level.\\
+
+Different ways to control resources:
 
 \begin{description}
 
@@ -259,11 +304,48 @@ balancing based on:
 
 \end{itemize}
 
+Storage DRS requirements:
+
+\begin{itemize}
+
+\item cannot have NFS and VMFS datastores in the same datastore cluster
+
+\item replicated and non-replicated datastores cannot coexist in the same
+DRS-enabled datastore cluster
+
+\item all hosts attached to the datastores in a datastore cluster must be
+ESXi 5.0
+
+\item datastores shared across multiple datacenters cannot be included in
+a cluster
+
+\item do not include datastores with hardware acceleration in a cluster
+with datastores without it
+
+\end{itemize}
+
 Initial placement is calculated when the VM is created, when the VM is cloned
 or when the VM is relocated.\\
 
 VMs are automatically balanced by being storage vMotioned to a better
 datastore if they arent receiving the latency they need.\\
+
+VMs that are powered on or off are considered for space balancing.\\
+
+Storage DRS automation levels:
+
+\begin{itemize}
+
+\item[no automation]
+placement and migration recommendations must be applied manually, default
+
+\item[fully automated]
+placement and migration recommendations run automatically
+
+\item[disabled]
+no recommendations are generated
+
+\end{itemize}
 
 Per-VM settings can override the SDRS automation level set on the datastore
 cluster.\\
@@ -273,18 +355,26 @@ Storage DRS affinity rules can be based on:
 \begin{description}
 
 \item[VMDK affinity]
-keep a VM's VMDKs on the same datastore, maximizes the availability when all
-VMDKs are needed to run, on by default for all VMs
+intra, keep a VM's VMDKs on the same datastore, maximizes the availability
+when all VMDKs are needed to run, on by default for all VMs
 
 \item[VMDK anti-affinity]
-keep a VM's VMDKs on different datastores, useful for separating log and data
-disks of database VMs, can select all or a subset of a the VM's disks
+intra, keep a VM's VMDKs on different datastores, useful for separating log and
+data disks of database VMs, can select all or a subset of a the VM's disks
 
 \item[VM anti-affinity]
-keep VMs on different datastores, similar to DRS anti-affinity rules, maximize
-availbility of redundant VMs
+inter, keep VMs on different datastores, similar to DRS anti-affinity rules,
+maximize availability of redundant VMs
 
 \end{description}
+
+Storage DRS makes mandatory recommendations for:
+
+\begin{itemize}
+\item datastore is out of space
+\item affinity rules are being violated
+\item datastore is entering maintenance mode
+\end{itemize}
 
 Datastore clusters are cluster of datastores like DRS clusters are clusters
 of hosts. When SDRS is not turned on a datastore cluster acts as a folder of
@@ -318,6 +408,25 @@ period).
 \subsubsection{Configure automation levels for DRS and virtual machines}
 
 \subsubsection{Create VM-Host and VM-VM affinity rules}
+
+Storage DRS affinity rules:
+
+\begin{description}
+
+\item[VM-VM]
+affinity or anti-affinity between individual VMs, whether individual VMS
+should run on the same host or separate hosts
+
+\item[VM-Host]
+affinity or anti-affinity between a group of VMs and a group of hosts,
+which hosts VMs should or should not run on, can be used to enforce
+application licensing, not checked against other rules, older rule takes
+precedence and newer rule is disabled
+
+\end{description}
+
+DRS gives higher precedence to prevent violations of anti-affinity rules than
+violations aof affinity rules.
 
 \subsubsection{Enable/Disable Host Monitoring}
 
