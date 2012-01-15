@@ -80,7 +80,8 @@ Storage adapter types:
 
 \begin{description}
 
-  \item[extent] a disk area that can be added to a datastore
+  \item[extent] a disk area that can be added to a datastore, a partition on
+    a LUN
 
   \item[HBA] host bus adapter, storage interface card
 
@@ -218,10 +219,10 @@ For ESXi hosts the preferred zoning is single-initiator-single-target.
 \begin{description}
 
 \item[soft zoning]
-SP controls the visibility of LUNs to HBAs
+controls the visibility of LUNs to HBAs, done on a FC switch
 
 \item[hard zoning]
-occurs at FC switch level, controls of visibility of SPs on a per-port basis
+occurs at FC switch level, controls visibility of SPs on a per-port basis
 
 \item[LUN masking]
 can occur at SP level or at the host level (for example, make host esx01 not be
@@ -236,8 +237,9 @@ able to see luns 3 and 4)
 Converged Network Adapters (CNA) contain network and Fibre Channel
 functionality on the same hardware.\\
 
-ESXi can do software FCoE but requires a NIC with Data Center Bridhing (DCB)
-and I/O offloading capabilites.\\
+ESXi can do software FCoE (new in vSphere 5) but requires a NIC with Data
+Center Bridhing (DCB) and I/O offloading capabilites. Software FCoE requires
+a vmkernel port but hardware FCoE does not.\\
 
 On switch ports used for FCoE that communicate with ESXi hosts, disable
 spanning tree protocol. It could delay FCoE initiation and cause an all
@@ -247,7 +249,9 @@ path down condition.
 
 The NFS client built into ESXi uses NFS version 3.\\
 
-In vSphere 5, Storage IO Control supports NFS.
+In vSphere 5, Storage IO Control supports NFS.\\
+
+RDMs cannot be stored on NFS datastores.\\
 
 \subsubsection{Connect to a NAS device}
 

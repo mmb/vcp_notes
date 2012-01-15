@@ -63,4 +63,23 @@ vCenter has a simple SMTP configuration, server and username only.
 
 \subsubsection{Determine host performance using resxtop and guest Perfmon}
 
+resxtop output:
+
+\begin{description}
+
+\item[\%CSTP]
+percentage of time a VM would have run but couldn't get enough CPUs
+
+\item[\%RDY]
+percentage of time a VM is waiting to run
+
+\end{description}
+
+100\% CPU use on the guest OS means that it is using 100\% of the CPU time
+that is given to it.
+
 \subsubsection{Given performance data, identify the affected vSphere resource}
+
+vmkernel swapping can take all of a VM's memory, not to exceed reservation.\\
+
+Ballooning can take 65\% of a VM's memory, not to exceed reservation.

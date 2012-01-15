@@ -128,6 +128,9 @@ at the VM level that are used for SIOC and SDRS
 
 \end{description}
 
+The size of a VM's swapfile is the size of the configured memory minus
+the memory reservation.\\
+
 Resource pools and vApps have an ``expandable reservation'' option. When
 enabled, if the combined reservations of the virtual machines are larger
 than the reservation of the resource pool or vApp, it can use resources from
@@ -455,7 +458,7 @@ Admission Control could prevent:
 \begin{itemize}
 \item powering on a VM
 \item migrating a VM to a host, cluster or resource pool
-\item increasing a CPU of memory reservation (this is the only check that can
+\item increasing a CPU or memory reservation (this is the only check that can
 be disabled)
 \end{itemize}
 
@@ -484,7 +487,7 @@ memory slots.\\
 
 The current failover capacity is the number of hosts that can
 fail and leave enough slots to satisfy the requirements of all powered-on
-VMs.
+VMs.\\
 
 Host failures cluster tolerates policy can be too conservative in
 heterogeneous environments because it only considers the largest VM and assumes

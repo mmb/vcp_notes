@@ -45,6 +45,9 @@ ESXI default users:
 \item root
 \end{itemize}
 
+Users who are in the AD group ``ESX Admins'' are automatically assigned the
+administrator role.
+
 \subsubsection{Describe how permissions are applied and inherited in vCenter Server}
 
 Users and groups are assigned roles.\\
@@ -53,8 +56,17 @@ Roles are assigned to objects.\\
 
 Combining users and groups with a roles are permissions.\\
 
-Permissions are inherited in hierarchical manner. Permission changes take
-effect immediately (you do not need to re-login).\\
+Permissions are inherited in hierarchical manner. The most fine-grained
+permission (the one closes to the object) is used if there are also
+permission on parent objects.\\
+
+When a user is a member of multiple groups with permissions to the same
+object, the effective permissions are a union of the privileges of the two
+groups.\\
+
+User permissions trump group permissions on the same object.\\
+
+Permission changes take effect immediately (you do not need to re-login).\\
 
 vCenter installed on Windows uses Windows Active Directory accounts. vCenter
 as a Linux appliance can use Windows Active Directory accounts.\\

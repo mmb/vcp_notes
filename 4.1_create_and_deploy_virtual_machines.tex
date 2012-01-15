@@ -120,11 +120,11 @@ included in snapshots
 
 \item[independent persistent]
 behave like conventional disks in physical computers, all data written to
-disk is permanent
+disk is permanent, no delta file is created during snapshots
 
 \item[independent nonpersistent]
-change to disk are discarded when you power off or rest the VM, the VM restarts
-in the same state every time
+change to disk are discarded when you power off or reset the VM, the VM
+restarts in the same state every time, tracks changes with a redo log
 
 \end{description}
 
@@ -177,6 +177,35 @@ Installing VMware tools in Linux:
 \subsubsection{Configure virtual machine time synchronization}
 
 \subsubsection{Convert a physical machine using VMware Converter}
+
+Converter Standalone can convert physical machines, virtual machines and
+system images to VMware virtual machines.\\
+
+Converter Standalone components:\\
+
+\begin{description}
+
+\item[Converter Standalone server]
+
+\item[Converter Standalone agent]
+runs on Windows machines to be converted
+
+\item[Converter Standalone client]
+
+\item[VMware vCenter Converter Boot CD]
+can be used to perform cold cloning on a physical machine
+
+\end{itemize}
+
+Conversion sources:
+
+\begin{itemize}
+\item powered-on VM (Windows or Linux, physical or virtual)
+\item powered-off VM on an ESXi host, host need not be managed by vCenter
+\item VMware hosts VM from other VMware products
+\item backup image or third-party virtual machine
+\item Hyper-V Server
+\end{itemize}
 
 \subsubsection{Import a supported virtual machine using VMware Converter}
 

@@ -18,6 +18,10 @@ The VSA is fully redundant.\\
 
 VSA uses RAID 1 across nodes and RAID 10 within each node.\\
 
+If there are two members in the VSA cluster, the VSA cluster service acts
+as a third member in case one fails. If there are three members in the cluster,
+the VSA cluster service is not needed.
+
 \subsubsection{Configure ESXi hosts as SVA hosts}
 
 The ESXi servers must be a fresh install.\\
@@ -29,7 +33,9 @@ vCenter must not be running as a VM on the ESXi hosts in the cluster.\\
 There cannot be any VMs running on the ESXi hosts during VSA installation.\\
 
 There can only be one datastore on the ESXi host and it must be a local disk
-(there cannot be any SAN connections on the server).
+(there cannot be any SAN connections on the server).\\
+
+None of the ESXi hosts used in a VSA cluster can be in an HA cluster.
 
 \subsubsection{Configure the storage network for the SVA}
 
