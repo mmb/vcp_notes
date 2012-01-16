@@ -18,7 +18,8 @@ DRS understands the resources of the virtual infrastructure:
 \item storage
 \end{itemize}
 
-There can be up to 32 ESXi hosts in a cluster.\\
+There can be up to 32 ESXi hosts in a cluster. There can be up to 3000 VMs
+per cluster.\\
 
 Host and cluster provide resource and VMs consume resources.\\
 
@@ -252,7 +253,7 @@ network or distirbuted virtual switches
 
 \item by default the isolation IP is the default gateway but you can configure
 others by setting the dsa.isolationaddressX setting, where X can be a value 1
-- 10
+- 10, using multiple redundant isolation addresses is recommended
 
 \item use network redundancy between ESXi servers
 
@@ -412,7 +413,7 @@ period).
 
 \subsubsection{Create VM-Host and VM-VM affinity rules}
 
-Storage DRS affinity rules:
+DRS affinity rules:
 
 \begin{description}
 
@@ -429,7 +430,7 @@ precedence and newer rule is disabled
 \end{description}
 
 DRS gives higher precedence to prevent violations of anti-affinity rules than
-violations aof affinity rules.
+violations of affinity rules.
 
 \subsubsection{Enable/Disable Host Monitoring}
 

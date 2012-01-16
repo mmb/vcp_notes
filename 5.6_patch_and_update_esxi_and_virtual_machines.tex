@@ -1,0 +1,71 @@
+\subsection{Path and Update ESXi and Virtual Machines}
+
+\subsubsection{Identify patching requirements for ESXi hosts and virtual machine hardware/tools}
+
+\subsubsection{Create/Edit/Remove a Host Profile from an ESXi host}
+
+\subsubsection{Attach/Apply a Host Profile to an ESXi host or cluster}
+
+\subsubsection{Perform compliance scanning and remediation of an ESXi host using Host Profiles}
+
+\subsubsection{Install and Configure vCenter Update Manager}
+
+Update Manager enables centralized, automated patch and version management
+for ESXi hosts, virtual machine hardware, VMware tools and virtual
+appliances. Update Manager no longer patches guest OSs or guest applications.
+
+Update Manager must be installed on a 64-bit machine.\\
+
+Update Manager can scan for compliance and apply updates.\\
+
+Update Manager reduces the number of reboots required after VMware Tools
+updates.\\
+
+Update Manager components:
+
+\begin{description}
+
+\item[Update Manager Server]
+can be installed on vCenter Server or elsewhere
+
+\item[Patch database]
+exsting SQL Server database or SQL Server 2005 Express
+
+\item[Update Manager plug-in]
+for vSphere client
+
+\item[Guest agents]
+installed on VMs
+
+\item[Download server]
+optional, for downloading patches outside of the internal network
+
+\end{description}
+
+\subsubsection{Configure patch download options}
+
+\subsubsection{Create/Edit/Delete an Update Manager baseline}
+
+A baseline is one or more patches, extensions or upgrades.\\
+
+Baseline types:
+
+\begin{itemize}
+\item host patch
+\item host extension
+\item host upgrade
+\item VM hardware/tools upgrade
+\item virtual appliance upgrade
+\end{itemize}
+
+A baseline group can contain one upgrade baseline per type and one or more
+patch or extension baselines.
+
+\subsubsection{Attach an Update Manager baselie to an ESXi host or cluster}
+
+\subsubsection{Scan and remediate ESXi hosts and virtual machine hardware/tools using Update Manager}
+
+Host patches can be staged (downloaded to the ESXi hosts) and then remediated
+(applied) separately.
+
+\subsubsection{Stage ESXi host updates}

@@ -27,7 +27,27 @@ standard vSwitches such as security, traffic shaping, load balancing, VLAN
 settings, portblocking and VMs joining VLANs on physical networks.\\
 
 Distributed virtual switches can be 3rd-party products like the Cisco Nexus
-1000V.
+1000V.\\
+
+Port binding determines when and how a VM's virtual NIC is bound to a port.
+It is configured at the port group level.\\
+
+Port binding options:
+
+\begin{description}
+
+\item[static]
+default, ports are bound at configuration time, the VM is guarenteed a port
+on the distributed virtual switch even if it is powered off
+
+\item[dynamic]
+the port is bound when needed, allows you oversubscribe ports
+
+\item[ephemeral]
+no binding, behaves like the standard switch, can allocate ports up to the
+maximum on the switch
+
+\end{description}
 
 \subsubsection{Create/Delete a vNetwork Distributed Switch}
 
