@@ -45,12 +45,12 @@ Host hardware must be compatible with vSphere 5.
 \begin{enumerate}
 \item run vCenter host agent pre-upgrade checker
 \item upgrade vCenter server
-\item upgrade vPphere client
+\item upgrade vSphere client
 \item upgrade licensing
 \item upgrade Update Manager
 \item upgrade ESX/ESXi hosts
 \item upgrade VMware tools and VM hardware
-\item upgrade datastore to VMF5
+\item upgrade datastore to VMFS5
 \end{enumerate}
 
 \subsubsection{Upgrade a vNetwork Distributed Switch}
@@ -80,7 +80,7 @@ using Update Manager or done manually.
 If upgrading an ESX host that has a local VMFS datastore, you will be asked
 if you want to preserve or overwrite it.\\
 
-if your ESX host has custom VIBs, migration could cause problems and you may
+If your ESX host has custom VIBs, migration could cause problems and you may
 need to build a new VIB using Image Builder.
 
 \subsubsection{Determine whether an in-place upgrade is appropriate in a given upgrade scenario}

@@ -121,7 +121,7 @@ lower level, allows direct access to the SCSI device
 
 \end{description}
 
-ESXi natively supports a number of brands of Fibre Channel HBAs.
+ESXi natively supports a number of brands of Fibre Channel HBAs.\\
 
 Fibre Channel Storage Array Types
 
@@ -155,7 +155,7 @@ An address is like a route in this case.\\
 iSCSI uses IQN (iSCSI qualified name) to identify SCSI targets and initiators.
 It is the equivalent of WWN in Fibre Channel.\\
 
-IQN format:\\
+IQN format:
 
 \begin{verbatim}
 year-month.reversed domain:organizational unique id
@@ -276,7 +276,7 @@ as candidates to be formatted.
 
 \subsubsection{Configure/Edit software iSCSI initiator settings}
 
-You can alias iSCSI software initiators with your own names.
+You can alias iSCSI software initiators with your own names.\\
 
 Making iSCSI discover LUNs available to the target can be done statically
 or dynamically:
@@ -302,7 +302,7 @@ with the target device.
 CHAP (Challenge Handshake Authentication Protocol) is used to secure iSCSI
 connections using a CHAP name and secret. Mutual CHAP, where the initiator and
 target both authenticate each other is supported for software and dependent
-hardware iSCSI. In normal CHAP the target authenticates the host only.
+hardware iSCSI. In normal CHAP the target authenticates the host only.\\
 
 CHAP is only checked when connecting the host to the array. As long as the
 connection is active, access continues. If either endpoint ends the
@@ -328,4 +328,4 @@ host can inform the array about freed datastore space so the array can reclaim
 it.\\
 
 For array thin provisioning ESXi 5.0 or later is required. The storage array
-must have firmware that suppors T10 Storage APIs.
+must have firmware that supports T10 Storage APIs.
